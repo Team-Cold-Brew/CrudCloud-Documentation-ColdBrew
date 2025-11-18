@@ -4,43 +4,64 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: '🚀 Rápido y Simple',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Crea instancias de bases de datos en segundos. Sin configuración compleja,
+        sin instalaciones manuales. Solo selecciona tu motor y empieza a trabajar.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: '🔐 Seguro por Defecto',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Credenciales generadas automáticamente, contraseñas hasheadas con BCrypt,
+        y rotación de contraseñas con un click. Tu seguridad es nuestra prioridad.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: '🐳 Contenedores Docker',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Cada instancia corre en su propio contenedor Docker aislado. 
+        Soportamos MySQL, PostgreSQL, MongoDB, Redis, Cassandra y SQL Server.
+      </>
+    ),
+  },
+  {
+    title: '💳 Planes Flexibles',
+    description: (
+      <>
+        Desde el plan FREE con 2 instancias hasta PREMIUM con 10 instancias.
+        Actualiza o baja de plan cuando lo necesites con Mercado Pago.
+      </>
+    ),
+  },
+  {
+    title: '📊 Dashboard Intuitivo',
+    description: (
+      <>
+        Frontend moderno en React con TailwindCSS. Gestiona todas tus bases de datos
+        desde un solo lugar con una interfaz responsive y accesible.
+      </>
+    ),
+  },
+  {
+    title: '🔄 API REST Completa',
+    description: (
+      <>
+        Backend robusto en Spring Boot con endpoints para crear, suspender, reanudar
+        y eliminar instancias. Documentación completa con ejemplos.
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({title, description}) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
         <p>{description}</p>

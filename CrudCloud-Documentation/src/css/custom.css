@@ -1,30 +1,269 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * CrudCloud Custom Styles
+ * Colores y estilos basados en el frontend de CrudCloud
  */
 
-/* You can override the default Infima variables here. */
+/* Paleta de colores CrudCloud */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* Primary - Indigo (como el frontend) */
+  --ifm-color-primary: #6366f1;
+  --ifm-color-primary-dark: #4f46e5;
+  --ifm-color-primary-darker: #4338ca;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #a5b4fc;
+  --ifm-color-primary-lightest: #c7d2fe;
+
+  /* Success - Green */
+  --ifm-color-success: #16a34a;
+  --ifm-color-success-dark: #15803d;
+  --ifm-color-success-darker: #166534;
+  
+  /* Error - Red */
+  --ifm-color-danger: #dc2626;
+  --ifm-color-danger-dark: #b91c1c;
+  --ifm-color-danger-darker: #991b1b;
+  
+  /* Warning - Orange */
+  --ifm-color-warning: #ea580c;
+  --ifm-color-warning-dark: #c2410c;
+  --ifm-color-warning-darker: #9a3412;
+
+  /* Background */
+  --ifm-background-color: #fafaf9;
+  --ifm-background-surface-color: #ffffff;
+
+  /* Text */
+  --ifm-font-color-base: #1c1917;
+  --ifm-font-color-secondary: #78716c;
+
+  /* Code */
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-code-background: #f5f5f4;
+  --docusaurus-highlighted-code-line-bg: rgba(99, 102, 241, 0.1);
+
+  /* Navbar */
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-navbar-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --ifm-navbar-height: 64px;
+
+  /* Footer */
+  --ifm-footer-background-color: #1c1917;
+  --ifm-footer-color: #d6d3d1;
+  --ifm-footer-link-color: #e7e5e4;
+  --ifm-footer-title-color: #fafaf9;
+
+  /* Border radius */
+  --ifm-button-border-radius: 0.5rem;
+  --ifm-card-border-radius: 0.75rem;
+
+  /* Shadows */
+  --ifm-global-shadow-lw: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ifm-global-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ifm-global-shadow-tl: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode - Colores más oscuros pero manteniendo el branding */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Primary */
+  --ifm-color-primary: #818cf8;
+  --ifm-color-primary-dark: #6366f1;
+  --ifm-color-primary-darker: #4f46e5;
+  --ifm-color-primary-darkest: #4338ca;
+  --ifm-color-primary-light: #a5b4fc;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
+
+  /* Success */
+  --ifm-color-success: #22c55e;
+  --ifm-color-success-dark: #16a34a;
+  
+  /* Error */
+  --ifm-color-danger: #ef4444;
+  --ifm-color-danger-dark: #dc2626;
+  
+  /* Warning */
+  --ifm-color-warning: #f97316;
+  --ifm-color-warning-dark: #ea580c;
+
+  /* Background */
+  --ifm-background-color: #1c1917;
+  --ifm-background-surface-color: #292524;
+
+  /* Text */
+  --ifm-font-color-base: #fafaf9;
+  --ifm-font-color-secondary: #a8a29e;
+
+  /* Code */
+  --ifm-code-background: #292524;
+  --docusaurus-highlighted-code-line-bg: rgba(129, 140, 248, 0.15);
+
+  /* Navbar */
+  --ifm-navbar-background-color: #292524;
+  
+  /* Footer */
+  --ifm-footer-background-color: #0c0a09;
+}
+
+/* Custom button styles */
+.button--primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button--primary:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Hero section custom styles */
+.hero {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  padding: 4rem 2rem;
+}
+
+.hero__title {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+/* Card hover effects */
+.card {
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+[data-theme='dark'] .card {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar customization */
+.menu__link--active {
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+  border-left: 3px solid var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: 0.5rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+/* Tables */
+table {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+thead {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+thead th {
+  font-weight: 600;
+}
+
+/* Admonitions (notas, avisos, etc.) */
+.admonition {
+  border-radius: 0.5rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+/* Badge styles para estados */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.badge--success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badge--danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.badge--warning {
+  background-color: #fed7aa;
+  color: #9a3412;
+}
+
+[data-theme='dark'] .badge--success {
+  background-color: #166534;
+  color: #dcfce7;
+}
+
+[data-theme='dark'] .badge--danger {
+  background-color: #991b1b;
+  color: #fee2e2;
+}
+
+[data-theme='dark'] .badge--warning {
+  background-color: #9a3412;
+  color: #fed7aa;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ifm-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.markdown > * {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1rem;
+  }
 }
