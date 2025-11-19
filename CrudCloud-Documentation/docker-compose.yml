@@ -1,0 +1,12 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  docusaurus:
+    build: .
+    container_name: docusaurus-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

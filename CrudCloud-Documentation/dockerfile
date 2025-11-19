@@ -1,0 +1,30 @@
+# Dockerfile
+FROM node:18-alpine as build
+
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm ci
+
+# Copiar el resto del código
+COPY . .
+
+# Build de producción
+RUN npm run build
+
+# Stage de producción con servidor ligero
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copiar solo lo necesario desde el build
+COPY --from=build /app/build ./build
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/node_modules ./node_modules
+
+EXPOSE 3000
+
+CMD ["npm", "run", "serve"]
