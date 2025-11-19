@@ -512,6 +512,5 @@ sudo apt update && sudo apt upgrade -y
 
 ## Próximos Pasos
 
-- [Testing](./testing.md)
 - [Arquitectura](./architecture.md)
 - [API Reference](./api-reference.md)

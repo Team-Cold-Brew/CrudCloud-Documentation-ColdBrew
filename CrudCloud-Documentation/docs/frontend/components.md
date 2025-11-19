@@ -479,6 +479,5 @@ describe('Button', () => {
 
 ## Próximos Pasos
 
-- [API Integration](./api-integration.md)
-- [State Management](./state-management.md)
 - [Deployment](./deployment.md)
+- [Introducción Frontend](./intro.md)

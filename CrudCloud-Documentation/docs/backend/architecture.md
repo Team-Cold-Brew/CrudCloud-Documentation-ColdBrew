@@ -343,4 +343,3 @@ public class InstanceService {
 
 - [Referencia de API](./api-reference.md)
 - [Deployment](./deployment.md)
-- [Testing](./testing.md)

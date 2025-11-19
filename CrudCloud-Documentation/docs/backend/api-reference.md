@@ -524,6 +524,5 @@ Todos los errores siguen este formato:
 
 ## Próximos Pasos
 
-- [Testing de API](./testing.md)
 - [Deployment](./deployment.md)
 - [Arquitectura](./architecture.md)

@@ -552,5 +552,4 @@ Verifica CORS en el backend y la URL en `.env.production`.
 ## Próximos Pasos
 
 - [Componentes](./components.md)
-- [API Integration](./api-integration.md)
 - [Backend Deployment](../backend/deployment.md)

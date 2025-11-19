@@ -197,6 +197,5 @@ Para estado más complejo:
 ## Próximos Pasos
 
 - [Instalación y Setup](./setup.md)
-- [Estructura del Proyecto](./project-structure.md)
 - [Componentes](./components.md)
 - [Deployment](./deployment.md)

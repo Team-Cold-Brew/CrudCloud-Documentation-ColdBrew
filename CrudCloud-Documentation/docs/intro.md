@@ -122,11 +122,6 @@ Explora la documentación por sección:
 - Integración con API
 - Deployment con Docker
 
-### 🎓 [Tutoriales](./tutorial-basics/create-a-document.md)
-- Crear documentación
-- Personalizar el sitio
-- Deploy de Docusaurus
-
 ## Características Destacadas
 
 ### 🔐 Seguridad

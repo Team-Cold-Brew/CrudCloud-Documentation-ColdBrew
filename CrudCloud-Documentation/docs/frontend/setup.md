@@ -387,7 +387,5 @@ export default defineConfig({
 
 ## Próximos Pasos
 
-- [Estructura del Proyecto](./project-structure.md)
 - [Componentes](./components.md)
-- [Integración con API](./api-integration.md)
 - [Deployment](./deployment.md)
