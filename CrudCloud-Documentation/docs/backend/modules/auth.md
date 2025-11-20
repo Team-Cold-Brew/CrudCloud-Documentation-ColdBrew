@@ -573,7 +573,7 @@ public class UserOAuthProvider {
 
 ## Próximos Pasos
 
-- [Referencia de API](./api-reference.md)
+- [Referencia de API](../api-reference.md)
 - [Módulo de Base de Datos](./database.md)
 - [Módulo de Pagos (Mercado Pago)](./mercado-pago.md)
 - [Arquitectura General](../architecture.md)
