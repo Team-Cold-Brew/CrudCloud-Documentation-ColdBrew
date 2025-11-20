@@ -27,6 +27,17 @@ const sidebars = {
         'backend/architecture',
         'backend/api-reference',
         'backend/deployment',
+        {
+          type: 'category',
+          label: 'Módulos',
+          collapsed: false,
+          items: [
+            'backend/modules/auth',
+            'backend/modules/database',
+            'backend/modules/mercado-pago',
+            'backend/modules/common',
+          ],
+        },
       ],
     },
     {

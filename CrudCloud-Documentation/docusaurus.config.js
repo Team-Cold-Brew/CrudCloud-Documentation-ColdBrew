@@ -80,9 +80,23 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/Team-Cold-Brew',
+            type: 'dropdown',
             label: 'GitHub',
             position: 'right',
+            items: [
+              {
+                label: 'Backend',
+                href: 'https://github.com/Team-Cold-Brew/CrudCloud-Backend-ColdBrew',
+              },
+              {
+                label: 'Frontend',
+                href: 'https://github.com/Team-Cold-Brew/CrudCloud-Frontend',
+              },
+              {
+                label: 'Documentación',
+                href: 'https://github.com/Team-Cold-Brew/CrudCloud-Documentation-ColdBrew',
+              },
+            ],
           },
         ],
       },
