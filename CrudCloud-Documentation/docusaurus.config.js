@@ -39,6 +39,8 @@ const config = {
     locales: ['es'],
   },
 
+  favicon: 'img/favicon.svg',
+
   presets: [
     [
       'classic',
