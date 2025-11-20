@@ -11,7 +11,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'CrudCloud',
-  tagline: 'Gestión de bases de datos en la nube, simple y rápida',
+  tagline: 'Cloud database management, simple and fast',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -35,8 +35,8 @@ const config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'es',
-    locales: ['es'],
+    defaultLocale: 'en',
+    locales: ['en'],
   },
 
   favicon: 'img/favicon.svg',
@@ -72,11 +72,11 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Documentación',
+            label: 'Documentation',
           },
           {
             href: 'https://cold-brew.crudzaso.com',
-            label: 'Plataforma',
+            label: 'Platform',
             position: 'right',
           },
           {
@@ -93,7 +93,7 @@ const config = {
                 href: 'https://github.com/Team-Cold-Brew/CrudCloud-Frontend',
               },
               {
-                label: 'Documentación',
+                label: 'Documentation',
                 href: 'https://github.com/Team-Cold-Brew/CrudCloud-Documentation-ColdBrew',
               },
             ],
@@ -104,10 +104,10 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Documentación',
+            title: 'Documentation',
             items: [
               {
-                label: 'Introducción',
+                label: 'Introduction',
                 to: '/docs/intro',
               },
               {
@@ -121,7 +121,7 @@ const config = {
             ],
           },
           {
-            title: 'Plataforma',
+            title: 'Platform',
             items: [
               {
                 label: 'CrudCloud App',
@@ -134,7 +134,7 @@ const config = {
             ],
           },
           {
-            title: 'Repositorios',
+            title: 'Repositories',
             items: [
               {
                 label: 'Backend',
@@ -145,13 +145,13 @@ const config = {
                 href: 'https://github.com/Team-Cold-Brew/CrudCloud-Frontend',
               },
               {
-                label: 'Documentación',
+                label: 'Documentation',
                 href: 'https://github.com/Team-Cold-Brew/CrudCloud-Documentation-ColdBrew',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Team Cold Brew. Construido con Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Team Cold Brew. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

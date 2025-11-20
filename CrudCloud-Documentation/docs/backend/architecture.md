@@ -1,38 +1,38 @@
-# Arquitectura del Sistema
+# System Architecture
 
-## Visión General
+## Overview
 
-CrudCloud Backend adopta una **arquitectura de monolito modular** diseñada para evolucionar a microservicios en el futuro. Esta decisión arquitectónica permite un desarrollo rápido del MVP mientras mantiene la estructura necesaria para una transición suave a microservicios.
+CrudCloud Backend adopts a **modular monolith architecture** designed to evolve into microservices in the future. This architectural decision allows for rapid MVP development while maintaining the necessary structure for a smooth transition to microservices.
 
-## Decisión Arquitectónica (ADR-000)
+## Architectural Decision (ADR-000)
 
-### Contexto
+### Context
 
-CrudCloud necesita escalar eventualmente a múltiples microservicios independientes. Sin embargo, para reducir la complejidad del MVP y minimizar riesgos, adoptamos un enfoque de monolito modular en Fase 1 que transiciona naturalmente a microservicios en Fase 2.
+CrudCloud needs to eventually scale to multiple independent microservices. However, to reduce MVP complexity and minimize risks, we adopt a modular monolith approach in Phase 1 that naturally transitions to microservices in Phase 2.
 
-### Fases
+### Phases
 
-#### Fase 1: Monolito Modular (MVP)
-- Un único JAR desplegable
-- Módulos verticales con límites claros
-- Comunicación mediante eventos e interfaces
-- Base de datos compartida con ownership lógico
+#### Phase 1: Modular Monolith (MVP)
+- A single deployable JAR
+- Vertical modules with clear boundaries
+- Communication via events and interfaces
+- Shared database with logical ownership
 
-#### Fase 2: Microservicios (Escalamiento)
-- Servicios independientes por módulo
-- API Gateway para routing
-- Base de datos por servicio
-- Comunicación mediante HTTP/REST y mensajería
+#### Phase 2: Microservices (Scaling)
+- Independent services per module
+- API Gateway for routing
+- Database per service
+- Communication via HTTP/REST and messaging
 
-## Módulos del Sistema
+## System Modules
 
 ### 1. Auth Module
-**Responsabilidad:** Autenticación, registro y gestión de usuarios
+**Responsibility:** Authentication, registration, and user management
 
-- Registro de usuarios (individuales y organizaciones)
-- Login con JWT
-- Gestión de perfiles
-- OAuth2 (preparado para futuro)
+- User registration (individuals and organizations)
+- Login with JWT
+- Profile management
+- OAuth2 (prepared for future)
 
 **Endpoints:**
 - `POST /api/auth/register`
@@ -40,12 +40,12 @@ CrudCloud necesita escalar eventualmente a múltiples microservicios independien
 - `GET /api/auth/profile`
 
 ### 2. Instance Module
-**Responsabilidad:** Provisioning y lifecycle de instancias de bases de datos
+**Responsibility:** Provisioning and lifecycle of database instances
 
-- Creación de contenedores Docker
-- Gestión de estados (CREATING, RUNNING, SUSPENDED, DELETED)
-- Rotación de credenciales
-- Generación de PDFs
+- Creation of Docker containers
+- State management (CREATING, RUNNING, SUSPENDED, DELETED)
+- Credential rotation
+- PDF generation
 
 **Endpoints:**
 - `POST /api/databases`
@@ -57,12 +57,12 @@ CrudCloud necesita escalar eventualmente a múltiples microservicios independien
 - `POST /api/databases/{id}/rotate-password`
 
 ### 3. Payment Module
-**Responsabilidad:** Procesamiento de pagos y transacciones
+**Responsibility:** Payment processing and transactions
 
-- Integración con Mercado Pago
-- Webhooks de pago
-- Trazabilidad de transacciones
-- Actualización de planes
+- Mercado Pago integration
+- Payment webhooks
+- Transaction traceability
+- Plan updates
 
 **Endpoints:**
 - `POST /api/payments/create-preference`
@@ -70,11 +70,11 @@ CrudCloud necesita escalar eventualmente a múltiples microservicios independien
 - `GET /api/payments/transactions`
 
 ### 4. Plan Module
-**Responsabilidad:** Gestión de planes y límites
+**Responsibility:** Plan and limits management
 
-- Definición de planes (FREE, STANDARD, PREMIUM)
-- Validación de límites
-- Upgrade/downgrade de planes
+- Plan definition (FREE, STANDARD, PREMIUM)
+- Limit validation
+- Plan upgrade/downgrade
 
 **Endpoints:**
 - `GET /api/plans`
@@ -82,50 +82,50 @@ CrudCloud necesita escalar eventualmente a múltiples microservicios independien
 - `POST /api/plans/upgrade`
 
 ### 5. Catalog Module
-**Responsabilidad:** Catálogo de motores de bases de datos
+**Responsibility:** Database engine catalog
 
-- Listado de motores disponibles
-- Especificaciones técnicas
-- Configuraciones por defecto
+- Listing of available engines
+- Technical specifications
+- Default configurations
 
 **Endpoints:**
 - `GET /api/engines`
 - `GET /api/engines/{engine}`
 
 ### 6. Core Module
-**Responsabilidad:** Infraestructura compartida
+**Responsibility:** Shared infrastructure
 
-- Configuración global
-- Manejo de excepciones
-- Eventos del sistema
+- Global configuration
+- Exception handling
+- System events
 - Utilities
 
-## Comunicación Entre Módulos
+## Inter-Module Communication
 
-### ✅ Preferido: Event-Driven (para notificaciones/reacciones)
+### ✅ Preferred: Event-Driven (for notifications/reactions)
 
 ```java
-// Publicar evento
+// Publish event
 eventPublisher.publishEvent(new InstanceCreatedEvent(instanceId, userId));
 
-// Escuchar evento
+// Listen to event
 @EventListener
 public void onInstanceCreated(InstanceCreatedEvent event) {
-    // Reaccionar al evento
+    // React to event
     emailService.sendInstanceCreatedEmail(event.getUserId());
 }
 ```
 
-### ✅ Permitido: Module API (para consultas/validación)
+### ✅ Allowed: Module API (for queries/validation)
 
 ```java
-// Interface del módulo
+// Module interface
 public interface PaymentModuleApi {
     boolean canUserCreateInstance(Long userId);
     PlanDto getUserPlan(Long userId);
 }
 
-// Uso desde otro módulo
+// Usage from another module
 @Autowired
 private PaymentModuleApi paymentApi;
 
@@ -134,23 +134,23 @@ if (!paymentApi.canUserCreateInstance(userId)) {
 }
 ```
 
-### ❌ Prohibido: Inyección Directa de Servicios
+### ❌ Forbidden: Direct Service Injection
 
 ```java
-// ❌ NUNCA hacer esto
+// ❌ NEVER do this
 @Service
 public class InstanceService {
     @Autowired
-    private PaymentService paymentService; // ¡Viola límites!
+    private PaymentService paymentService; // Violates boundaries!
 }
 ```
 
-## Modelo de Datos
+## Data Model
 
-### Esquema Principal
+### Main Schema
 
 ```sql
--- Usuarios
+-- Users
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Planes
+-- Plans
 CREATE TABLE plans (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE plans (
     currency VARCHAR(3) DEFAULT 'USD'
 );
 
--- Instancias
+-- Instances
 CREATE TABLE instances (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -189,7 +189,7 @@ CREATE TABLE instances (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Transacciones
+-- Transactions
 CREATE TABLE transactions (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -203,7 +203,7 @@ CREATE TABLE transactions (
 );
 ```
 
-## Flujo de Creación de Instancia
+## Instance Creation Flow
 
 ```mermaid
 sequenceDiagram
@@ -228,9 +228,9 @@ sequenceDiagram
     API-->>User: 201 Created
 ```
 
-## Seguridad
+## Security
 
-### Autenticación JWT
+### JWT Authentication
 
 ```java
 @Configuration
@@ -254,16 +254,16 @@ public class SecurityConfig {
 }
 ```
 
-### Gestión de Credenciales
+### Credential Management
 
-- **Contraseñas de usuario:** BCrypt con salt
-- **Contraseñas de BD:** Generadas aleatoriamente (16 caracteres)
-- **Visibilidad única:** Solo en respuesta de creación/rotación
-- **Almacenamiento:** Hash en base de datos
+- **User passwords:** BCrypt with salt
+- **DB passwords:** Randomly generated (16 characters)
+- **Single visibility:** Only in creation/rotation response
+- **Storage:** Hash in database
 
-## Manejo de Errores
+## Error Handling
 
-### Jerarquía de Excepciones
+### Exception Hierarchy
 
 ```java
 public class CrudCloudException extends RuntimeException {}
@@ -289,7 +289,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-## Configuración por Ambientes
+## Configuration by Environment
 
 ### Development
 ```properties
@@ -305,7 +305,7 @@ logging.level.com.riwi.CrudCloud=INFO
 spring.jpa.show-sql=false
 ```
 
-## Monitoreo y Observabilidad
+## Monitoring and Observability
 
 ### Actuator Endpoints
 
@@ -314,7 +314,7 @@ management.endpoints.web.exposure.include=health,info,metrics
 management.endpoint.health.show-details=always
 ```
 
-### Logging Estructurado
+### Structured Logging
 
 ```java
 @Slf4j
@@ -328,18 +328,18 @@ public class InstanceService {
 }
 ```
 
-## Preparación para Microservicios
+## Microservices Preparation
 
-### Estrategias de Migración
+### Migration Strategies
 
-1. **Extracción de Servicios:** Cada módulo se convierte en un repositorio independiente
-2. **Base de Datos por Servicio:** Migración de esquemas a bases de datos separadas
-3. **API Gateway:** Spring Cloud Gateway para routing centralizado
-4. **Service Discovery:** Eureka o Consul
-5. **Mensajería:** RabbitMQ o Kafka para eventos
-6. **Distributed Tracing:** Jaeger o Zipkin
+1. **Service Extraction:** Each module becomes an independent repository
+2. **Database per Service:** Schema migration to separate databases
+3. **API Gateway:** Spring Cloud Gateway for centralized routing
+4. **Service Discovery:** Eureka or Consul
+5. **Messaging:** RabbitMQ or Kafka for events
+6. **Distributed Tracing:** Jaeger or Zipkin
 
-## Próximos Pasos
+## Next Steps
 
-- [Referencia de API](./api-reference.md)
+- [API Reference](./api-reference.md)
 - [Deployment](./deployment.md)

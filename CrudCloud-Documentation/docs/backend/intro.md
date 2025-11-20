@@ -1,55 +1,55 @@
-# Backend CrudCloud
+# CrudCloud Backend
 
-## Descripción General
+## Overview
 
-**CrudCloud Backend** es una plataforma basada en Spring Boot que permite a usuarios individuales y organizaciones crear, gestionar y acceder a instancias reales de bases de datos ejecutándose como contenedores Docker en una VPS.
+**CrudCloud Backend** is a Spring Boot-based platform that allows individual users and organizations to create, manage, and access real database instances running as Docker containers on a VPS.
 
-## Características Principales
+## Main Features
 
-- 🔐 **Autenticación JWT** - Sistema de autenticación seguro con tokens
-- 🐳 **Orquestación Docker** - Gestión automatizada de contenedores de bases de datos
-- 💳 **Integración Mercado Pago** - Sistema de pagos y suscripciones
-- 📊 **Multi-Motor** - Soporte para 6 motores de bases de datos
-- 🔑 **Gestión de Credenciales** - Generación segura y rotación de contraseñas
-- 📧 **Notificaciones** - Sistema de emails y generación de PDFs
-- 🎯 **Planes y Límites** - Sistema de suscripciones con límites configurables
+- 🔐 **JWT Authentication** - Secure authentication system with tokens
+- 🐳 **Docker Orchestration** - Automated management of database containers
+- 💳 **Mercado Pago Integration** - Payment and subscription system
+- 📊 **Multi-Engine** - Support for 6 database engines
+- 🔑 **Credentials Management** - Secure generation and password rotation
+- 📧 **Notifications** - Email system and PDF generation
+- 🎯 **Plans and Limits** - Subscription system with configurable limits
 
-## Stack Tecnológico
+## Tech Stack
 
-- **Java 17+** con Spring Boot 3.x
+- **Java 17+** with Spring Boot 3.x
 - **Spring Data JPA** + Hibernate
-- **Spring Security** con JWT
-- **Docker Java SDK** para orquestación de contenedores
-- **PostgreSQL** como base de datos principal
-- **Mercado Pago SDK** para pagos
-- **JavaMail** para notificaciones
-- **iText/Apache PDFBox** para generación de PDFs
+- **Spring Security** with JWT
+- **Docker Java SDK** for container orchestration
+- **PostgreSQL** as main database
+- **Mercado Pago SDK** for payments
+- **JavaMail** for notifications
+- **iText/Apache PDFBox** for PDF generation
 
-## Arquitectura
+## Architecture
 
-El backend sigue una arquitectura de **monolito modular** preparado para evolucionar a microservicios:
+The backend follows a **modular monolith** architecture prepared to evolve into microservices:
 
-### Módulos Principales
+### Main Modules
 
-1. **Auth Module** - Autenticación y gestión de usuarios
-2. **Instance Module** - Provisioning y lifecycle de instancias
-3. **Payment Module** - Procesamiento de transacciones
-4. **Plan Module** - Gestión de suscripciones y límites
-5. **Catalog Module** - Catálogo de motores de bases de datos
-6. **Core Module** - Infraestructura compartida
+1. **Auth Module** - Authentication and user management
+2. **Instance Module** - Provisioning and lifecycle of instances
+3. **Payment Module** - Transaction processing
+4. **Plan Module** - Subscription and limits management
+5. **Catalog Module** - Database engine catalog
+6. **Core Module** - Shared infrastructure
 
-## Motores de Bases de Datos Soportados
+## Supported Database Engines
 
-| Motor | Puerto | Estado |
-|-------|--------|--------|
-| MySQL | 3306 | ✅ Disponible |
-| PostgreSQL | 5432 | ✅ Disponible |
-| MongoDB | 27017 | ✅ Disponible |
-| Redis | 6379 | ✅ Disponible |
-| Cassandra | 9042 | ✅ Disponible |
-| SQL Server | 1433 | ✅ Disponible |
+| Engine | Port | Status |
+|--------|------|--------|
+| MySQL | 3306 | ✅ Available |
+| PostgreSQL | 5432 | ✅ Available |
+| MongoDB | 27017 | ✅ Available |
+| Redis | 6379 | ✅ Available |
+| Cassandra | 9042 | ✅ Available |
+| SQL Server | 1433 | ✅ Available |
 
-## Estados de Instancias
+## Instance States
 
 ```mermaid
 stateDiagram-v2
@@ -62,9 +62,9 @@ stateDiagram-v2
     DELETED --> [*]
 ```
 
-## Próximos Pasos
+## Next Steps
 
-- [Instalación y Configuración](./setup.md)
-- [Arquitectura Detallada](./architecture.md)
-- [Referencia de API](./api-reference.md)
+- [Installation and Configuration](./setup.md)
+- [Detailed Architecture](./architecture.md)
+- [API Reference](./api-reference.md)
 - [Deployment](./deployment.md)

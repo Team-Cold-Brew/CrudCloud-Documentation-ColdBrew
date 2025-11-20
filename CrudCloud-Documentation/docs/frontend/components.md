@@ -1,11 +1,11 @@
-# Componentes
+# Components
 
-## Estructura de Componentes
+## Component Structure
 
-El proyecto sigue una arquitectura de componentes organizada en dos categorías principales:
+The project follows a component architecture organized into two main categories:
 
-1. **Common Components** - Componentes reutilizables
-2. **Layout Components** - Componentes de estructura
+1. **Common Components** - Reusable components
+2. **Layout Components** - Structure components
 
 ---
 
@@ -13,24 +13,24 @@ El proyecto sigue una arquitectura de componentes organizada en dos categorías 
 
 ### Button
 
-Componente de botón reutilizable con variantes y estados.
+Reusable button component with variants and states.
 
-**Ubicación:** `src/components/common/Button.jsx`
+**Location:** `src/components/common/Button.jsx`
 
 ```jsx
 import Button from '@/components/common/Button'
 
-// Variantes
+// Variants
 <Button variant="primary">Primary Button</Button>
 <Button variant="secondary">Secondary Button</Button>
 <Button variant="danger">Danger Button</Button>
 <Button variant="outline">Outline Button</Button>
 
-// Estados
+// States
 <Button loading>Loading...</Button>
 <Button disabled>Disabled</Button>
 
-// Tamaños
+// Sizes
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>
@@ -38,22 +38,22 @@ import Button from '@/components/common/Button'
 
 **Props:**
 
-| Prop | Tipo | Default | Descripción |
+| Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `string` | `'primary'` | Estilo del botón |
-| `size` | `string` | `'md'` | Tamaño del botón |
-| `loading` | `boolean` | `false` | Muestra spinner de carga |
-| `disabled` | `boolean` | `false` | Deshabilita el botón |
-| `onClick` | `function` | - | Callback al hacer click |
-| `type` | `string` | `'button'` | Tipo HTML del botón |
+| `variant` | `string` | `'primary'` | Button style |
+| `size` | `string` | `'md'` | Button size |
+| `loading` | `boolean` | `false` | Shows loading spinner |
+| `disabled` | `boolean` | `false` | Disables button |
+| `onClick` | `function` | - | Click callback |
+| `type` | `string` | `'button'` | HTML button type |
 
 ---
 
 ### Input
 
-Componente de input con validación y mensajes de error.
+Input component with validation and error messages.
 
-**Ubicación:** `src/components/common/Input.jsx`
+**Location:** `src/components/common/Input.jsx`
 
 ```jsx
 import Input from '@/components/common/Input'
@@ -61,7 +61,7 @@ import Input from '@/components/common/Input'
 <Input
   label="Email"
   type="email"
-  placeholder="tu@email.com"
+  placeholder="your@email.com"
   value={email}
   onChange={(e) => setEmail(e.target.value)}
   error={errors.email}
@@ -71,24 +71,24 @@ import Input from '@/components/common/Input'
 
 **Props:**
 
-| Prop | Tipo | Default | Descripción |
+| Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `label` | `string` | - | Etiqueta del input |
-| `type` | `string` | `'text'` | Tipo de input HTML |
-| `value` | `string` | - | Valor del input |
-| `onChange` | `function` | - | Callback onChange |
-| `error` | `string` | - | Mensaje de error |
-| `required` | `boolean` | `false` | Campo requerido |
-| `disabled` | `boolean` | `false` | Deshabilita el input |
+| `label` | `string` | - | Input label |
+| `type` | `string` | `'text'` | HTML input type |
+| `value` | `string` | - | Input value |
+| `onChange` | `function` | - | onChange callback |
+| `error` | `string` | - | Error message |
+| `required` | `boolean` | `false` | Required field |
+| `disabled` | `boolean` | `false` | Disables input |
 | `placeholder` | `string` | - | Placeholder |
 
 ---
 
 ### Modal
 
-Componente de modal con overlay.
+Modal component with overlay.
 
-**Ubicación:** `src/components/common/Modal.jsx`
+**Location:** `src/components/common/Modal.jsx`
 
 ```jsx
 import Modal from '@/components/common/Modal'
@@ -96,13 +96,13 @@ import Modal from '@/components/common/Modal'
 <Modal
   isOpen={isOpen}
   onClose={() => setIsOpen(false)}
-  title="Confirmar Acción"
+  title="Confirm Action"
 >
-  <p>¿Estás seguro de eliminar esta instancia?</p>
+  <p>Are you sure you want to delete this instance?</p>
   <div className="mt-4 flex gap-2">
-    <Button onClick={handleConfirm}>Confirmar</Button>
+    <Button onClick={handleConfirm}>Confirm</Button>
     <Button variant="outline" onClick={() => setIsOpen(false)}>
-      Cancelar
+      Cancel
     </Button>
   </div>
 </Modal>
@@ -110,34 +110,34 @@ import Modal from '@/components/common/Modal'
 
 **Props:**
 
-| Prop | Tipo | Default | Descripción |
+| Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `isOpen` | `boolean` | `false` | Controla visibilidad |
-| `onClose` | `function` | - | Callback al cerrar |
-| `title` | `string` | - | Título del modal |
-| `children` | `node` | - | Contenido del modal |
-| `size` | `string` | `'md'` | Tamaño del modal |
+| `isOpen` | `boolean` | `false` | Controls visibility |
+| `onClose` | `function` | - | Close callback |
+| `title` | `string` | - | Modal title |
+| `children` | `node` | - | Modal content |
+| `size` | `string` | `'md'` | Modal size |
 
 ---
 
 ### Card
 
-Componente de tarjeta con sombra y padding.
+Card component with shadow and padding.
 
-**Ubicación:** `src/components/common/Card.jsx`
+**Location:** `src/components/common/Card.jsx`
 
 ```jsx
 import Card from '@/components/common/Card'
 
 <Card>
   <Card.Header>
-    <h3>Título de la Tarjeta</h3>
+    <h3>Card Title</h3>
   </Card.Header>
   <Card.Body>
-    <p>Contenido de la tarjeta</p>
+    <p>Card content</p>
   </Card.Body>
   <Card.Footer>
-    <Button>Acción</Button>
+    <Button>Action</Button>
   </Card.Footer>
 </Card>
 ```
@@ -146,9 +146,9 @@ import Card from '@/components/common/Card'
 
 ### Toast
 
-Notificaciones temporales.
+Temporary notifications.
 
-**Ubicación:** `src/components/common/Toast.jsx`
+**Location:** `src/components/common/Toast.jsx`
 
 ```jsx
 import { useToast } from '@/hooks/useToast'
@@ -157,28 +157,28 @@ function MyComponent() {
   const { showToast } = useToast()
 
   const handleSuccess = () => {
-    showToast('Instancia creada exitosamente', 'success')
+    showToast('Instance created successfully', 'success')
   }
 
   const handleError = () => {
-    showToast('Error al crear instancia', 'error')
+    showToast('Error creating instance', 'error')
   }
 }
 ```
 
-**Tipos:**
-- `success` - Verde con ✓
-- `error` - Rojo con ✗
-- `warning` - Naranja con ⚠
-- `info` - Azul con ℹ
+**Types:**
+- `success` - Green with ✓
+- `error` - Red with ✗
+- `warning` - Orange with ⚠
+- `info` - Blue with ℹ
 
 ---
 
 ### Badge
 
-Etiquetas de estado.
+Status labels.
 
-**Ubicación:** `src/components/common/Badge.jsx`
+**Location:** `src/components/common/Badge.jsx`
 
 ```jsx
 import Badge from '@/components/common/Badge'
@@ -193,15 +193,15 @@ import Badge from '@/components/common/Badge'
 
 ### Select
 
-Dropdown select personalizado.
+Custom dropdown select.
 
-**Ubicación:** `src/components/common/Select.jsx`
+**Location:** `src/components/common/Select.jsx`
 
 ```jsx
 import Select from '@/components/common/Select'
 
 <Select
-  label="Motor de Base de Datos"
+  label="Database Engine"
   value={engine}
   onChange={(e) => setEngine(e.target.value)}
   options={[
@@ -218,9 +218,9 @@ import Select from '@/components/common/Select'
 
 ### Sidebar
 
-Barra lateral de navegación.
+Sidebar navigation.
 
-**Ubicación:** `src/components/layout/Sidebar.jsx`
+**Location:** `src/components/layout/Sidebar.jsx`
 
 ```jsx
 import Sidebar from '@/components/layout/Sidebar'
@@ -228,19 +228,19 @@ import Sidebar from '@/components/layout/Sidebar'
 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 ```
 
-**Características:**
-- Navegación principal
-- Indicador de página activa
-- Responsive (drawer en móvil)
-- Íconos con Lucide React
+**Features:**
+- Main navigation
+- Active page indicator
+- Responsive (drawer on mobile)
+- Icons with Lucide React
 
 ---
 
 ### Navbar
 
-Barra superior con usuario y acciones.
+Top bar with user and actions.
 
-**Ubicación:** `src/components/layout/Navbar.jsx`
+**Location:** `src/components/layout/Navbar.jsx`
 
 ```jsx
 import Navbar from '@/components/layout/Navbar'
@@ -248,20 +248,20 @@ import Navbar from '@/components/layout/Navbar'
 <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 ```
 
-**Elementos:**
-- Botón de menú (móvil)
-- Nombre de usuario
+**Elements:**
+- Menu button (mobile)
+- Username
 - Avatar
-- Dropdown de perfil
-- Botón de logout
+- Profile dropdown
+- Logout button
 
 ---
 
 ### LayoutDashboard
 
-Layout principal que combina Sidebar y Navbar.
+Main layout that combines Sidebar and Navbar.
 
-**Ubicación:** `src/components/layout/LayoutDashboard.jsx`
+**Location:** `src/components/layout/LayoutDashboard.jsx`
 
 ```jsx
 import LayoutDashboard from '@/components/layout/LayoutDashboard'
@@ -277,11 +277,11 @@ function App() {
 
 ---
 
-## Hooks Personalizados
+## Custom Hooks
 
 ### useAuth
 
-Hook para acceder al contexto de autenticación.
+Hook to access authentication context.
 
 ```jsx
 import { useAuth } from '@/context/AuthContext'
@@ -292,7 +292,7 @@ function MyComponent() {
   return (
     <div>
       {isAuthenticated ? (
-        <p>Bienvenido, {user.name}</p>
+        <p>Welcome, {user.name}</p>
       ) : (
         <Button onClick={login}>Login</Button>
       )}
@@ -305,7 +305,7 @@ function MyComponent() {
 
 ### useToast
 
-Hook para mostrar notificaciones.
+Hook to display notifications.
 
 ```jsx
 import { useToast } from '@/hooks/useToast'
@@ -316,9 +316,9 @@ function MyComponent() {
   const handleClick = async () => {
     try {
       await api.post('/databases', data)
-      showToast('Base de datos creada', 'success')
+      showToast('Database created', 'success')
     } catch (error) {
-      showToast('Error al crear base de datos', 'error')
+      showToast('Error creating database', 'error')
     }
   }
 }
@@ -328,7 +328,7 @@ function MyComponent() {
 
 ### useCopyToClipboard
 
-Hook para copiar texto al portapapeles.
+Hook to copy text to clipboard.
 
 ```jsx
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
@@ -340,7 +340,7 @@ function CredentialsDisplay({ password }) {
     <div>
       <code>{password}</code>
       <Button onClick={() => copyToClipboard(password)}>
-        {copied ? 'Copiado!' : 'Copiar'}
+        {copied ? 'Copied!' : 'Copy'}
       </Button>
     </div>
   )
@@ -349,7 +349,7 @@ function CredentialsDisplay({ password }) {
 
 ---
 
-## Patrones de Diseño
+## Design Patterns
 
 ### Compound Components
 
@@ -384,14 +384,14 @@ const ProtectedRoute = withAuth(Dashboard)
 
 ---
 
-## Estilos con TailwindCSS
+## Styles with TailwindCSS
 
-### Clases Reutilizables
+### Reusable Classes
 
 ```css
 /* src/styles/globals.css */
 
-/* Botones */
+/* Buttons */
 .btn-primary {
   @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition;
 }
@@ -417,13 +417,13 @@ const ProtectedRoute = withAuth(Dashboard)
 
 ---
 
-## Accesibilidad
+## Accessibility
 
 ### ARIA Labels
 
 ```jsx
 <button
-  aria-label="Cerrar modal"
+  aria-label="Close modal"
   aria-describedby="modal-description"
   onClick={onClose}
 >
@@ -449,7 +449,7 @@ const ProtectedRoute = withAuth(Dashboard)
 
 ---
 
-## Testing de Componentes
+## Component Testing
 
 ```jsx
 import { render, screen, fireEvent } from '@testing-library/react'
@@ -477,7 +477,7 @@ describe('Button', () => {
 
 ---
 
-## Próximos Pasos
+## Next Steps
 
 - [Deployment](./deployment.md)
-- [Introducción Frontend](./intro.md)
+- [Frontend Introduction](./intro.md)

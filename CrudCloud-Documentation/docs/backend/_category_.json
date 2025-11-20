@@ -3,6 +3,6 @@
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "Documentación del Backend de CrudCloud - API REST en Spring Boot para gestión de bases de datos en la nube"
+    "description": "CrudCloud Backend Documentation - Spring Boot REST API for cloud database management"
   }
 }

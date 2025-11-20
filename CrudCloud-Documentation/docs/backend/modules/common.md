@@ -1,35 +1,35 @@
-# Módulo Common
+# Common Module
 
-El módulo Common contiene utilidades compartidas, modelos de dominio, excepciones personalizadas y configuraciones comunes utilizadas por todos los demás módulos del sistema.
+The Common module contains shared utilities, domain models, custom exceptions, and common configurations used by all other system modules.
 
-## 📋 Características
+## 📋 Features
 
-✅ Modelos de dominio compartidos  
-✅ Excepciones personalizadas  
-✅ DTOs base y utilidades  
-✅ Validadores personalizados  
-✅ Constantes del sistema  
-✅ Configuraciones globales
+✅ Shared domain models  
+✅ Custom exceptions  
+✅ Base DTOs and utilities  
+✅ Custom validators  
+✅ System constants  
+✅ Global configurations
 
-## 🏗️ Estructura
+## 🏗️ Structure
 
 ```
 common/
-├── config/              # Configuraciones globales
+├── config/              # Global configurations
 │   ├── CorsConfig.java
 │   ├── JacksonConfig.java
 │   └── ValidationConfig.java
-├── dto/                 # DTOs base
+├── dto/                 # Base DTOs
 │   ├── ApiResponse.java
 │   ├── ErrorResponse.java
 │   └── PageResponse.java
-├── exception/           # Excepciones personalizadas
+├── exception/           # Custom exceptions
 │   ├── DuplicateResourceException.java
 │   ├── InvalidCredentialsException.java
 │   ├── PlanLimitExceededException.java
 │   ├── ResourceNotFoundException.java
 │   └── GlobalExceptionHandler.java
-├── models/              # Modelos de dominio
+├── models/              # Domain models
 │   ├── User.java
 │   ├── Plan.java
 │   ├── Payment.java
@@ -38,16 +38,16 @@ common/
 │   ├── SubscriptionStatus.java
 │   ├── DatabaseInstance.java
 │   └── Credential.java
-├── util/                # Utilidades
+├── util/                # Utilities
 │   ├── DateUtil.java
 │   ├── StringUtil.java
 │   └── ValidationUtil.java
-└── constants/           # Constantes del sistema
+└── constants/           # System constants
     ├── ApiConstants.java
     └── AppConstants.java
 ```
 
-## 📊 Modelos de Dominio
+## 📊 Domain Models
 
 ### User
 
@@ -156,11 +156,11 @@ public class Payment {
 ```java
 public enum PaymentStatus {
     PENDING,        // Pago pendiente
-    APPROVED,       // Pago aprobado
-    AUTHORIZED,     // Pago autorizado
-    IN_PROCESS,     // En proceso
-    IN_MEDIATION,   // En mediación
-    REJECTED,       // Rechazado
+    APPROVED,       // Payment approved
+    AUTHORIZED,     // Payment authorized
+    IN_PROCESS,     // In process
+    IN_MEDIATION,   // In mediation
+    REJECTED,       // Rejected
     CANCELLED,      // Cancelado
     REFUNDED,       // Reembolsado
     CHARGED_BACK    // Contracargo
@@ -202,10 +202,10 @@ public class Subscription {
 
 ```java
 public enum SubscriptionStatus {
-    ACTIVE,     // Suscripción activa
-    CANCELLED,  // Cancelada por usuario
-    EXPIRED,    // Vencida
-    PENDING     // Pendiente de activación
+    ACTIVE,     // Active subscription
+    CANCELLED,  // Cancelled by user
+    EXPIRED,    // Expired
+    PENDING     // Pending activation
 }
 ```
 
@@ -273,9 +273,9 @@ public class Credential {
 }
 ```
 
-## ⚠️ Excepciones Personalizadas
+## ⚠️ Custom Exceptions
 
-### Jerarquía de Excepciones
+### Exception Hierarchy
 
 ```
 RuntimeException
@@ -304,7 +304,7 @@ public class DuplicateResourceException extends BusinessException {
     }
 }
 
-// Uso
+// Usage
 throw new DuplicateResourceException("Email already registered");
 ```
 
@@ -402,7 +402,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
     
-    // Manejo genérico de excepciones
+    // Generic exception handling
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobal(
         Exception ex,
@@ -419,7 +419,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-## 📦 DTOs Base
+## 📦 Base DTOs
 
 ### ApiResponse
 
@@ -496,7 +496,7 @@ public class PageResponse<T> {
 }
 ```
 
-## 🔧 Utilidades
+## 🔧 Utilities
 
 ### DateUtil
 
@@ -566,7 +566,7 @@ public class ValidationUtil {
 }
 ```
 
-## 🔒 Configuraciones Globales
+## 🔒 Global Configurations
 
 ### CorsConfig
 
@@ -602,17 +602,17 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         
-        // Configurar formato de fechas
+        // Configure date format
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         
-        // Ignorar propiedades desconocidas
+        // Ignore unknown properties
         mapper.configure(
             DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, 
             false
         );
         
-        // Formato de nombres en snake_case
+        // Snake_case naming format
         mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
         
         return mapper;
@@ -637,7 +637,7 @@ public class ValidationConfig {
 }
 ```
 
-## 📌 Constantes del Sistema
+## 📌 System Constants
 
 ### ApiConstants
 
@@ -694,20 +694,20 @@ public class AppConstants {
 }
 ```
 
-## 🔗 Uso en Otros Módulos
+## 🔗 Usage in Other Modules
 
-### Módulo Auth
+### Auth Module
 
 ```java
-// Usar excepciones personalizadas
+// Use custom exceptions
 if (userRepository.existsByEmail(email)) {
     throw new DuplicateResourceException("Email already registered");
 }
 
-// Usar utilidades
+// Use utilities
 String securePassword = StringUtil.generateSecurePassword();
 
-// Usar constantes
+// Use constants
 if (currentInstances >= AppConstants.FREE_MAX_DATABASES) {
     throw new PlanLimitExceededException(
         AppConstants.FREE_PLAN, 
@@ -717,49 +717,49 @@ if (currentInstances >= AppConstants.FREE_MAX_DATABASES) {
 }
 ```
 
-### Módulo Database
+### Database Module
 
 ```java
-// Usar modelos compartidos
+// Use shared models
 User user = userRepository.findById(userId)
     .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
-// Usar utilidades
+// Use utilities
 String username = StringUtil.generateUsername();
 String password = StringUtil.generateSecurePassword();
 
-// Usar constantes
+// Use constants
 String host = AppConstants.DEFAULT_DATABASE_HOST;
 String network = AppConstants.DOCKER_NETWORK;
 ```
 
-### Módulo Payments
+### Payments Module
 
 ```java
-// Usar enums compartidos
+// Use shared enums
 payment.setStatus(PaymentStatus.APPROVED);
 subscription.setStatus(SubscriptionStatus.ACTIVE);
 
-// Usar utilidades de fecha
+// Use date utilities
 LocalDateTime endDate = DateUtil.addMonths(startDate, 1);
 
-// Usar DTOs base
+// Use base DTOs
 return ApiResponse.success("Payment processed", paymentResponse);
 ```
 
-## ✅ Características Clave
+## ✅ Key Features
 
-✅ **Modelos Compartidos** entre todos los módulos  
-✅ **Excepciones Personalizadas** con manejo centralizado  
-✅ **DTOs Base** para respuestas consistentes  
-✅ **Utilidades Reutilizables** para operaciones comunes  
-✅ **Constantes Centralizadas** para configuración  
-✅ **Validaciones Consistentes** en toda la aplicación  
-✅ **Configuraciones Globales** de CORS, Jackson, etc.
+✅ **Shared Models** across all modules  
+✅ **Custom Exceptions** with centralized handling  
+✅ **Base DTOs** for consistent responses  
+✅ **Reusable Utilities** for common operations  
+✅ **Centralized Constants** for configuration  
+✅ **Consistent Validations** throughout the application  
+✅ **Global Configurations** for CORS, Jackson, etc.
 
-## Próximos Pasos
+## Next Steps
 
-- [Módulo de Autenticación](./auth.md)
-- [Módulo de Base de Datos](./database.md)
-- [Módulo de Pagos (Mercado Pago)](./mercado-pago.md)
-- [Arquitectura del Backend](../architecture.md)
+- [Authentication Module](./auth.md)
+- [Database Module](./database.md)
+- [Payment Module (Mercado Pago)](./mercado-pago.md)
+- [Backend Architecture](../architecture.md)

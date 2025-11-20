@@ -1,83 +1,83 @@
-# Módulo de Base de Datos (Database)
+# Database Module
 
-El módulo de base de datos gestiona el ciclo de vida completo de instancias de bases de datos en contenedores Docker, permitiendo a los usuarios crear, configurar y administrar bases de datos PostgreSQL y MySQL en la nube.
+The database module manages the complete lifecycle of database instances in Docker containers, allowing users to create, configure, and manage PostgreSQL and MySQL databases in the cloud.
 
-## 📋 Características
+## 📋 Features
 
-✅ Creación de instancias de BD en contenedores Docker  
-✅ Soporte para PostgreSQL y MySQL  
-✅ Gestión automática de credenciales  
-✅ Envío de credenciales por correo electrónico  
-✅ Límites por plan de suscripción  
-✅ Operaciones CRUD completas  
-✅ Integración con Docker SDK de Java
+✅ Creation of DB instances in Docker containers  
+✅ Support for PostgreSQL and MySQL  
+✅ Automatic credential management  
+✅ Credential delivery via email  
+✅ Limits by subscription plan  
+✅ Complete CRUD operations  
+✅ Integration with Docker SDK for Java
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
 ```
 database/
-├── controller/           # Endpoints REST
-├── dto/                  # DTOs de Request/Response
-├── model/               # Entidades específicas del módulo
-├── repository/          # Repositorios JPA
-└── service/             # Lógica de negocio y Docker SDK
+├── controller/           # REST endpoints
+├── dto/                  # Request/Response DTOs
+├── model/               # Module-specific entities
+├── repository/          # JPA repositories
+└── service/             # Business logic and Docker SDK
 ```
 
-### Modelos Principales
+### Main Models
 
-- `DatabaseInstance` - Información de la instancia de BD
-- `DatabaseEngine` - Motores disponibles (PostgreSQL, MySQL)
-- `InstanceStatus` - Estados del ciclo de vida
-- `Credential` - Credenciales de acceso generadas
+- `DatabaseInstance` - DB instance information
+- `DatabaseEngine` - Available engines (PostgreSQL, MySQL)
+- `InstanceStatus` - Lifecycle states
+- `Credential` - Generated access credentials
 
-## 🎯 Flujo de Creación de Instancia
+## 🎯 Instance Creation Flow
 
 ```
-1. Usuario solicita crear instancia
+1. User requests to create instance
    POST /api/databases/create
    {
      userId: 1,
      engine: "POSTGRESQL",
      version: "15",
-     databaseName: "mydb" (opcional)
+     databaseName: "mydb" (optional)
    }
 
-2. Backend valida límites del plan
-   ├─ FREE: máximo 2 instancias
-   ├─ STANDARD: máximo 5 instancias
-   └─ PREMIUM: máximo 10 instancias
+2. Backend validates plan limits
+   ├─ FREE: maximum 2 instances
+   ├─ STANDARD: maximum 5 instances
+   └─ PREMIUM: maximum 10 instances
 
-3. Genera credenciales aleatorias
+3. Generates random credentials
    ├─ Username: crudzaso_{uuid}
    ├─ Password: {secure_random_32_chars}
-   └─ Database Name: {custom o auto-generado}
+   └─ Database Name: {custom or auto-generated}
 
-4. Crea contenedor Docker
-   ├─ Imagen: postgres:15 o mysql:8
-   ├─ Variables de entorno con credenciales
-   ├─ Mapeo de puertos aleatorio
-   └─ Configuración de red
+4. Creates Docker container
+   ├─ Image: postgres:15 or mysql:8
+   ├─ Environment variables with credentials
+   ├─ Random port mapping
+   └─ Network configuration
 
-5. Guarda en base de datos
+5. Saves to database
    ├─ DatabaseInstance
    ├─ Credential
-   └─ Relación con User
+   └─ Relationship with User
 
-6. Envía correo con credenciales
+6. Sends email with credentials
    ├─ Host: api.cold-brew.crudzaso.com
-   ├─ Port: {puerto_mapeado}
+   ├─ Port: {mapped_port}
    ├─ Username: crudzaso_{uuid}
-   ├─ Password: {password_generado}
-   └─ Database: {nombre_bd}
+   ├─ Password: {generated_password}
+   └─ Database: {db_name}
 
-7. Retorna información al usuario
+7. Returns information to user
 ```
 
 ## 📡 API Endpoints
 
-### Gestión de Instancias
+### Instance Management
 
-#### Crear Instancia de Base de Datos
+#### Create Database Instance
 
 ```http
 POST /api/databases/create
@@ -92,7 +92,7 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta exitosa (201 Created):**
+**Successful response (201 Created):**
 
 ```json
 {
@@ -114,13 +114,13 @@ Content-Type: application/json
 }
 ```
 
-**Errores:**
-- `400 Bad Request`: Límite de instancias alcanzado para el plan
-- `400 Bad Request`: Motor de BD no soportado
-- `404 Not Found`: Usuario no encontrado
-- `500 Internal Server Error`: Error al crear contenedor Docker
+**Errors:**
+- `400 Bad Request`: Instance limit reached for plan
+- `400 Bad Request`: DB engine not supported
+- `404 Not Found`: User not found
+- `500 Internal Server Error`: Error creating Docker container
 
-#### Listar Instancias de Usuario
+#### List User Instances
 
 ```http
 GET /api/databases/user/{userId}
@@ -154,7 +154,7 @@ Authorization: Bearer {token}
 ]
 ```
 
-#### Obtener Instancia por ID
+#### Get Instance by ID
 
 ```http
 GET /api/databases/{instanceId}
@@ -180,16 +180,16 @@ Authorization: Bearer {token}
 }
 ```
 
-#### Iniciar Instancia
+#### Start Instance
 
 ```http
 POST /api/databases/{instanceId}/start
 Authorization: Bearer {token}
 ```
 
-Inicia un contenedor Docker detenido.
+Starts a stopped Docker container.
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -199,16 +199,16 @@ Inicia un contenedor Docker detenido.
 }
 ```
 
-#### Detener Instancia
+#### Stop Instance
 
 ```http
 POST /api/databases/{instanceId}/stop
 Authorization: Bearer {token}
 ```
 
-Detiene un contenedor Docker en ejecución.
+Stops a running Docker container.
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -218,16 +218,16 @@ Detiene un contenedor Docker en ejecución.
 }
 ```
 
-#### Reiniciar Instancia
+#### Restart Instance
 
 ```http
 POST /api/databases/{instanceId}/restart
 Authorization: Bearer {token}
 ```
 
-Reinicia el contenedor Docker.
+Restarts the Docker container.
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -237,16 +237,16 @@ Reinicia el contenedor Docker.
 }
 ```
 
-#### Eliminar Instancia
+#### Delete Instance
 
 ```http
 DELETE /api/databases/{instanceId}
 Authorization: Bearer {token}
 ```
 
-Elimina el contenedor Docker y los datos asociados.
+Deletes the Docker container and associated data.
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -255,11 +255,11 @@ Elimina el contenedor Docker y los datos asociados.
 }
 ```
 
-**⚠️ Advertencia:** Esta operación es **irreversible** y eliminará todos los datos de la base de datos.
+**⚠️ Warning:** This operation is **irreversible** and will delete all database data.
 
-### Credenciales
+### Credentials
 
-#### Obtener Credenciales de Instancia
+#### Get Instance Credentials
 
 ```http
 GET /api/databases/{instanceId}/credentials
@@ -282,16 +282,16 @@ Authorization: Bearer {token}
 }
 ```
 
-#### Regenerar Contraseña
+#### Regenerate Password
 
 ```http
 POST /api/databases/{instanceId}/credentials/regenerate
 Authorization: Bearer {token}
 ```
 
-Genera una nueva contraseña para las credenciales existentes y reinicia el contenedor.
+Generates a new password for existing credentials and restarts the container.
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -301,9 +301,9 @@ Genera una nueva contraseña para las credenciales existentes y reinicia el cont
 }
 ```
 
-## 🔧 Integración con Docker SDK
+## 🔧 Docker SDK Integration
 
-### Configuración de Docker Client
+### Docker Client Configuration
 
 ```java
 DockerClient dockerClient = DockerClientBuilder
@@ -316,7 +316,7 @@ DockerClient dockerClient = DockerClientBuilder
     .build();
 ```
 
-### Crear Contenedor PostgreSQL
+### Create PostgreSQL Container
 
 ```java
 CreateContainerResponse container = dockerClient
@@ -342,7 +342,7 @@ CreateContainerResponse container = dockerClient
 dockerClient.startContainerCmd(container.getId()).exec();
 ```
 
-### Crear Contenedor MySQL
+### Create MySQL Container
 
 ```java
 CreateContainerResponse container = dockerClient
@@ -369,7 +369,7 @@ CreateContainerResponse container = dockerClient
 dockerClient.startContainerCmd(container.getId()).exec();
 ```
 
-## 📊 Modelos de Datos
+## 📊 Data Models
 
 ### DatabaseInstance Entity
 
@@ -453,17 +453,17 @@ public enum DatabaseEngine {
 
 ```java
 public enum InstanceStatus {
-    CREATING,    // Creando contenedor
-    RUNNING,     // Contenedor en ejecución
-    STOPPED,     // Contenedor detenido
-    ERROR,       // Error en el contenedor
+    CREATING,    // Creating container
+    RUNNING,     // Container running
+    STOPPED,     // Container stopped
+    ERROR,       // Container error
     DELETED      // Contenedor eliminado
 }
 ```
 
-## 📧 Envío de Credenciales por Email
+## 📧 Send Credentials by Email
 
-### Plantilla de Email
+### Email Template
 
 ```html
 <!DOCTYPE html>
@@ -477,76 +477,76 @@ public enum InstanceStatus {
     </style>
 </head>
 <body>
-    <h1>¡Tu base de datos está lista! 🎉</h1>
-    <p>Hemos creado tu instancia de base de datos en CrudCloud.</p>
+    <h1>Your database is ready! 🎉</h1>
+    <p>We have created your database instance on CrudCloud.</p>
     
     <div class="credentials">
-        <h3>Credenciales de Acceso</h3>
+        <h3>Access Credentials</h3>
         <div class="credential-item">
-            <span class="label">Motor:</span> PostgreSQL 15
+            <span class="label">Engine:</span> PostgreSQL 15
         </div>
         <div class="credential-item">
             <span class="label">Host:</span> api.cold-brew.crudzaso.com
         </div>
         <div class="credential-item">
-            <span class="label">Puerto:</span> 5432
+            <span class="label">Port:</span> 5432
         </div>
         <div class="credential-item">
-            <span class="label">Usuario:</span> crudzaso_abc123def456
+            <span class="label">Username:</span> crudzaso_abc123def456
         </div>
         <div class="credential-item">
-            <span class="label">Contraseña:</span> SecureRandomPassword123!
+            <span class="label">Password:</span> SecureRandomPassword123!
         </div>
         <div class="credential-item">
-            <span class="label">Base de Datos:</span> myapp_production
+            <span class="label">Database:</span> myapp_production
         </div>
     </div>
     
-    <h3>String de Conexión</h3>
+    <h3>Connection String</h3>
     <code>postgresql://crudzaso_abc123def456:SecureRandomPassword123!@api.cold-brew.crudzaso.com:5432/myapp_production</code>
     
-    <p><strong>⚠️ Importante:</strong> Guarda estas credenciales en un lugar seguro.</p>
+    <p><strong>⚠️ Important:</strong> Save these credentials in a secure location.</p>
 </body>
 </html>
 ```
 
-## 🔒 Seguridad
+## 🔒 Security
 
-### Generación de Credenciales
+### Credential Generation
 
 ```java
-// Username único
+// Unique username
 String username = "crudzaso_" + UUID.randomUUID().toString().replace("-", "");
 
-// Password seguro (32 caracteres aleatorios)
+// Secure password (32 random characters)
 String password = RandomStringUtils.randomAlphanumeric(32);
 ```
 
-### Almacenamiento de Contraseñas
+### Password Storage
 
-- ⚠️ Las contraseñas se almacenan **cifradas** en la base de datos
-- ✅ Se usa **AES-256** para cifrado
-- ✅ Clave de cifrado en variable de entorno `DB_ENCRYPTION_KEY`
+- ⚠️ Passwords are stored **encrypted** in the database
+- ✅ **AES-256** encryption is used
+- ✅ Encryption key in `DB_ENCRYPTION_KEY` environment variable
 
 ### Network Isolation
 
 ```java
-// Contenedores en red privada
+// Containers in private network
 .withNetworkMode("crudcloud-network")
 
-// Solo puertos expuestos son accesibles
+// Only exposed ports are accessible
 .withPortBindings(...)
 ```
 
-## 📝 Límites por Plan
+## 📝 Limits by Plan
 
-| Plan | Max Instancias | Nombres Personalizados |
-|------|---------------|------------------------|
-| FREE | 2 | ❌ (Auto-generados) |
+| Plan | Max Instances | Custom Names |
+|------|---------------|----------------------|
+| FREE | 2 | ❌ (Auto-generated) |
 | STANDARD | 5 | ✅ |
 | PREMIUM | 10 | ✅ |
 
-### Validación de Límites
+### Limits Validation
 
 ```java
 public void validateInstanceLimit(User user) {
@@ -563,33 +563,33 @@ public void validateInstanceLimit(User user) {
 }
 ```
 
-## 🔗 Integración con Otros Módulos
+## 🔗 Integration with Other Modules
 
-### Con Módulo Auth
-- Valida que el usuario esté autenticado
-- Verifica límites del plan del usuario
-- Obtiene información del plan (`User.personalPlan`)
+### With Auth Module
+- Validates that user is authenticated
+- Verifies user's plan limits
+- Obtains plan information (`User.personalPlan`)
 
-### Con Módulo de Pagos
-- Upgrade de plan permite crear más instancias
-- Validación de suscripción activa
+### With Payment Module
+- Plan upgrade allows creating more instances
+- Active subscription validation
 
-### Con Servicio de Email
-- Envío de credenciales al crear instancia
-- Notificaciones de cambios de estado
-- Alertas de reinicio de contraseña
+### With Email Service
+- Send credentials when creating instance
+- State change notifications
+- Password reset alerts
 
-## ⚠️ Manejo de Errores
+## ⚠️ Error Handling
 
-### Excepciones Personalizadas
+### Custom Exceptions
 
-- **`PlanLimitExceededException`**: Límite de instancias alcanzado
-- **`DatabaseEngineNotSupportedException`**: Motor de BD no soportado
-- **`ContainerCreationException`**: Error al crear contenedor Docker
-- **`ContainerNotFoundException`**: Contenedor no encontrado
-- **`CredentialGenerationException`**: Error al generar credenciales
+- **`PlanLimitExceededException`**: Instance limit reached
+- **`DatabaseEngineNotSupportedException`**: DB engine not supported
+- **`ContainerCreationException`**: Error creating Docker container
+- **`ContainerNotFoundException`**: Container not found
+- **`CredentialGenerationException`**: Error generating credentials
 
-### Respuesta de Error
+### Error Response
 
 ```json
 {
@@ -601,21 +601,21 @@ public void validateInstanceLimit(User user) {
 }
 ```
 
-## 🎯 Características Clave
+## 🎯 Key Features
 
-✅ **Creación Automática** de contenedores Docker  
-✅ **Gestión de Credenciales** segura y cifrada  
-✅ **Envío de Credenciales** por email  
-✅ **Soporte Multi-Motor** (PostgreSQL, MySQL)  
-✅ **Límites por Plan** de suscripción  
-✅ **Operaciones CRUD** completas  
-✅ **Network Isolation** con Docker  
-✅ **Port Mapping** automático  
-✅ **Health Checks** de contenedores
+✅ **Automatic Creation** of Docker containers  
+✅ **Credential Management** secure and encrypted  
+✅ **Credential Delivery** via email  
+✅ **Multi-Engine Support** (PostgreSQL, MySQL)  
+✅ **Limits by Plan** subscription  
+✅ **Complete CRUD Operations**  
+✅ **Network Isolation** with Docker  
+✅ **Automatic Port Mapping**  
+✅ **Container Health Checks**
 
-## Próximos Pasos
+## Next Steps
 
-- [Módulo de Autenticación](./auth.md)
-- [Módulo de Pagos (Mercado Pago)](./mercado-pago.md)
-- [Módulo Common](./common.md)
-- [Arquitectura del Backend](../architecture.md)
+- [Authentication Module](./auth.md)
+- [Payment Module (Mercado Pago)](./mercado-pago.md)
+- [Common Module](./common.md)
+- [Backend Architecture](../architecture.md)

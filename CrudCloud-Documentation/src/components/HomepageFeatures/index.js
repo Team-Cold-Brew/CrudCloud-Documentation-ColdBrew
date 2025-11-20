@@ -4,56 +4,56 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: '🚀 Rápido y Simple',
+    title: '🚀 Fast and Simple',
     description: (
       <>
-        Crea instancias de bases de datos en segundos. Sin configuración compleja,
-        sin instalaciones manuales. Solo selecciona tu motor y empieza a trabajar.
+        Create database instances in seconds. No complex configuration,
+        no manual installations. Just select your engine and start working.
       </>
     ),
   },
   {
-    title: '🔐 Seguro por Defecto',
+    title: '🔐 Secure by Default',
     description: (
       <>
-        Credenciales generadas automáticamente, contraseñas hasheadas con BCrypt,
-        y rotación de contraseñas con un click. Tu seguridad es nuestra prioridad.
+        Auto-generated credentials, BCrypt hashed passwords,
+        and one-click password rotation. Your security is our priority.
       </>
     ),
   },
   {
-    title: '🐳 Contenedores Docker',
+    title: '🐳 Docker Containers',
     description: (
       <>
-        Cada instancia corre en su propio contenedor Docker aislado. 
-        Soportamos MySQL, PostgreSQL, MongoDB, Redis, Cassandra y SQL Server.
+        Each instance runs in its own isolated Docker container. 
+        We support MySQL, PostgreSQL, MongoDB, Redis, Cassandra and SQL Server.
       </>
     ),
   },
   {
-    title: '💳 Planes Flexibles',
+    title: '💳 Flexible Plans',
     description: (
       <>
-        Desde el plan FREE con 2 instancias hasta PREMIUM con 10 instancias.
-        Actualiza o baja de plan cuando lo necesites con Mercado Pago.
+        From FREE plan with 2 instances to PREMIUM with 10 instances.
+        Upgrade or downgrade whenever you need with Mercado Pago.
       </>
     ),
   },
   {
-    title: '📊 Dashboard Intuitivo',
+    title: '📊 Intuitive Dashboard',
     description: (
       <>
-        Frontend moderno en React con TailwindCSS. Gestiona todas tus bases de datos
-        desde un solo lugar con una interfaz responsive y accesible.
+        Modern React frontend with TailwindCSS. Manage all your databases
+        from one place with a responsive and accessible interface.
       </>
     ),
   },
   {
-    title: '🔄 API REST Completa',
+    title: '🔄 Complete REST API',
     description: (
       <>
-        Backend robusto en Spring Boot con endpoints para crear, suspender, reanudar
-        y eliminar instancias. Documentación completa con ejemplos.
+        Robust Spring Boot backend with endpoints to create, suspend, resume
+        and delete instances. Full documentation with examples.
       </>
     ),
   },

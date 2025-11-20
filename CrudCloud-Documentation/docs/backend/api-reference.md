@@ -1,13 +1,13 @@
-# Referencia de API
+# API Reference
 
 ## Base URL
 
-- **Desarrollo:** `http://localhost:8080/api`
-- **Producción:** `https://api.cold-brew.crudzaso.com/api`
+- **Development:** `http://localhost:8080/api`
+- **Production:** `https://api.cold-brew.crudzaso.com/api`
 
-## Autenticación
+## Authentication
 
-Todas las rutas (excepto `/auth/register` y `/auth/login`) requieren un token JWT en el header:
+All routes (except `/auth/register` and `/auth/login`) require a JWT token in the header:
 
 ```
 Authorization: Bearer <token>
@@ -19,7 +19,7 @@ Authorization: Bearer <token>
 
 ### Register User
 
-Registra un nuevo usuario en el sistema.
+Registers a new user in the system.
 
 **Endpoint:** `POST /api/auth/register`
 
@@ -45,15 +45,15 @@ Registra un nuevo usuario en el sistema.
 ```
 
 **Validation Rules:**
-- Email: formato válido, único
-- Password: mínimo 8 caracteres, 1 mayúscula, 1 número, 1 carácter especial
-- UserType: `INDIVIDUAL` o `ORGANIZATION`
+- Email: valid format, unique
+- Password: minimum 8 characters, 1 uppercase, 1 number, 1 special character
+- UserType: `INDIVIDUAL` or `ORGANIZATION`
 
 ---
 
 ### Login
 
-Autentica un usuario y retorna un token JWT.
+Authenticates a user and returns a JWT token.
 
 **Endpoint:** `POST /api/auth/login`
 
@@ -86,7 +86,7 @@ Autentica un usuario y retorna un token JWT.
 
 ### Get Profile
 
-Obtiene el perfil del usuario autenticado.
+Obtains the authenticated user's profile.
 
 **Endpoint:** `GET /api/auth/profile`
 
@@ -114,7 +114,7 @@ Obtiene el perfil del usuario autenticado.
 
 ### List Available Engines
 
-Lista todos los motores de bases de datos disponibles.
+Lists all available database engines.
 
 **Endpoint:** `GET /api/engines`
 
@@ -172,7 +172,7 @@ Lista todos los motores de bases de datos disponibles.
 
 ### Create Instance
 
-Crea una nueva instancia de base de datos.
+Creates a new database instance.
 
 **Endpoint:** `POST /api/databases`
 
@@ -187,8 +187,8 @@ Crea una nueva instancia de base de datos.
 ```
 
 **Notes:**
-- En plan FREE, `databaseName` es opcional (se genera automáticamente)
-- En planes STANDARD/PREMIUM, `databaseName` es requerido
+- On FREE plan, `databaseName` is optional (auto-generated)
+- On STANDARD/PREMIUM plans, `databaseName` is required
 
 **Response:** `201 Created`
 ```json
@@ -206,13 +206,13 @@ Crea una nueva instancia de base de datos.
 }
 ```
 
-⚠️ **Importante:** La contraseña solo se muestra en esta respuesta. No se podrá recuperar después.
+⚠️ **Important:** The password is only shown in this response. It cannot be retrieved later.
 
 ---
 
 ### List Instances
 
-Lista todas las instancias del usuario autenticado.
+Lists all instances of the authenticated user.
 
 **Endpoint:** `GET /api/databases`
 
@@ -250,7 +250,7 @@ Lista todas las instancias del usuario autenticado.
 
 ### Get Instance Details
 
-Obtiene los detalles de una instancia específica.
+Obtains the details of a specific instance.
 
 **Endpoint:** `GET /api/databases/{id}`
 
@@ -277,7 +277,7 @@ Obtiene los detalles de una instancia específica.
 
 ### Suspend Instance
 
-Suspende una instancia en ejecución (detiene el contenedor).
+Suspends a running instance (stops the container).
 
 **Endpoint:** `PUT /api/databases/{id}/suspend`
 
@@ -296,7 +296,7 @@ Suspende una instancia en ejecución (detiene el contenedor).
 
 ### Resume Instance
 
-Reanuda una instancia suspendida (inicia el contenedor).
+Resumes a suspended instance (starts the container).
 
 **Endpoint:** `PUT /api/databases/{id}/resume`
 
@@ -315,7 +315,7 @@ Reanuda una instancia suspendida (inicia el contenedor).
 
 ### Delete Instance
 
-Elimina permanentemente una instancia (destruye el contenedor).
+Permanently deletes an instance (destroys the container).
 
 **Endpoint:** `DELETE /api/databases/{id}`
 
@@ -332,7 +332,7 @@ Elimina permanentemente una instancia (destruye el contenedor).
 
 ### Rotate Password
 
-Genera una nueva contraseña para la instancia.
+Generates a new password for the instance.
 
 **Endpoint:** `POST /api/databases/{id}/rotate-password`
 
@@ -349,13 +349,13 @@ Genera una nueva contraseña para la instancia.
 }
 ```
 
-⚠️ **Importante:** La nueva contraseña solo se muestra en esta respuesta.
+⚠️ **Important:** The new password is only shown in this response.
 
 ---
 
 ### Download Credentials PDF
 
-Genera y descarga un PDF con las credenciales de la instancia.
+Generates and downloads a PDF with the instance credentials.
 
 **Endpoint:** `GET /api/databases/{id}/credentials/pdf`
 
@@ -369,7 +369,7 @@ Genera y descarga un PDF con las credenciales de la instancia.
 
 ### List Plans
 
-Lista todos los planes disponibles.
+Lists all available plans.
 
 **Endpoint:** `GET /api/plans`
 
@@ -422,7 +422,7 @@ Lista todos los planes disponibles.
 
 ### Get Current Plan
 
-Obtiene el plan actual del usuario con su uso.
+Obtains the user's current plan with usage.
 
 **Endpoint:** `GET /api/plans/current`
 
@@ -450,7 +450,7 @@ Obtiene el plan actual del usuario con su uso.
 
 ### Create Payment Preference
 
-Crea una preferencia de pago en Mercado Pago para upgrade de plan.
+Creates a payment preference in Mercado Pago for plan upgrade.
 
 **Endpoint:** `POST /api/payments/create-preference`
 
@@ -476,7 +476,7 @@ Crea una preferencia de pago en Mercado Pago para upgrade de plan.
 
 ### Payment Webhook
 
-Webhook para recibir notificaciones de Mercado Pago.
+Webhook to receive notifications from Mercado Pago.
 
 **Endpoint:** `POST /api/payments/webhook`
 
@@ -484,13 +484,13 @@ Webhook para recibir notificaciones de Mercado Pago.
 - `x-signature: <mercadopago-signature>`
 - `x-request-id: <request-id>`
 
-**Request Body:** (enviado por Mercado Pago)
+**Request Body:** (sent by Mercado Pago)
 
 ---
 
 ## ❌ Error Responses
 
-Todos los errores siguen este formato:
+All errors follow this format:
 
 ```json
 {
@@ -501,28 +501,28 @@ Todos los errores siguen este formato:
 }
 ```
 
-### Códigos de Error Comunes
+### Common Error Codes
 
-| Código | Status | Descripción |
+| Code | Status | Description |
 |--------|--------|-------------|
-| `PLAN_LIMIT_REACHED` | 403 | Usuario alcanzó el límite de instancias |
-| `INSTANCE_NOT_FOUND` | 404 | Instancia no existe |
-| `INVALID_CREDENTIALS` | 401 | Email o contraseña incorrectos |
-| `VALIDATION_ERROR` | 400 | Error en validación de datos |
-| `DOCKER_ERROR` | 500 | Error al crear/gestionar contenedor |
-| `PAYMENT_FAILED` | 402 | Error en procesamiento de pago |
-| `UNAUTHORIZED` | 401 | Token inválido o expirado |
+| `PLAN_LIMIT_REACHED` | 403 | User reached instance limit |
+| `INSTANCE_NOT_FOUND` | 404 | Instance does not exist |
+| `INVALID_CREDENTIALS` | 401 | Incorrect email or password |
+| `VALIDATION_ERROR` | 400 | Data validation error |
+| `DOCKER_ERROR` | 500 | Error creating/managing container |
+| `PAYMENT_FAILED` | 402 | Payment processing error |
+| `UNAUTHORIZED` | 401 | Invalid or expired token |
 
 ---
 
 ## Rate Limiting
 
-- **Límite:** 100 requests por minuto por usuario
-- **Header de respuesta:** `X-RateLimit-Remaining: 95`
+- **Limit:** 100 requests per minute per user
+- **Response header:** `X-RateLimit-Remaining: 95`
 
 ---
 
-## Próximos Pasos
+## Next Steps
 
 - [Deployment](./deployment.md)
-- [Arquitectura](./architecture.md)
+- [Architecture](./architecture.md)

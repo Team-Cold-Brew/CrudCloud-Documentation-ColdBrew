@@ -2,40 +2,40 @@
 sidebar_position: 1
 ---
 
-# Bienvenido a CrudCloud
+# Welcome to CrudCloud
 
-**CrudCloud** es una plataforma cloud que permite a individuos y organizaciones crear, gestionar y acceder a instancias reales de bases de datos ejecutándose como contenedores Docker en una VPS.
+**CrudCloud** is a cloud platform that allows individuals and organizations to create, manage, and access real database instances running as Docker containers on a VPS.
 
-## ¿Qué es CrudCloud?
+## What is CrudCloud?
 
-CrudCloud simplifica el proceso de provisioning de bases de datos, eliminando la complejidad de la configuración manual. Con unos pocos clics, puedes:
+CrudCloud simplifies the database provisioning process, eliminating the complexity of manual configuration. With just a few clicks, you can:
 
-- 🚀 Crear instancias de bases de datos en segundos
-- 🔐 Obtener credenciales seguras automáticamente
-- 🎯 Gestionar el ciclo de vida completo (crear, suspender, reanudar, eliminar)
-- 💳 Escalar con planes flexibles y pagos integrados
-- 📊 Monitorear el uso y los límites de tu plan
+- 🚀 Create database instances in seconds
+- 🔐 Get secure credentials automatically
+- 🎯 Manage the complete lifecycle (create, suspend, resume, delete)
+- 💳 Scale with flexible plans and integrated payments
+- 📊 Monitor usage and limits of your plan
 
-## Motores de Bases de Datos Soportados
+## Supported Database Engines
 
-| Motor | Versión | Tipo | Puerto |
-|-------|---------|------|--------|
-| **MySQL** | 8.0 | Relacional | 3306 |
-| **PostgreSQL** | 14 | Relacional | 5432 |
-| **MongoDB** | 6.0 | NoSQL (Documentos) | 27017 |
+| Engine | Version | Type | Port |
+|--------|---------|------|------|
+| **MySQL** | 8.0 | Relational | 3306 |
+| **PostgreSQL** | 14 | Relational | 5432 |
+| **MongoDB** | 6.0 | NoSQL (Documents) | 27017 |
 | **Redis** | 7.0 | Key-Value (In-Memory) | 6379 |
 | **Cassandra** | 4.1 | NoSQL (Columnar) | 9042 |
-| **SQL Server** | 2022 | Relacional | 1433 |
+| **SQL Server** | 2022 | Relational | 1433 |
 
-## Arquitectura de la Plataforma
+## Platform Architecture
 
 ```mermaid
 graph TB
-    A[Usuario] --> B[Frontend React]
-    B --> C[API Backend Spring Boot]
-    C --> D[PostgreSQL Principal]
+    A[User] --> B[React Frontend]
+    B --> C[Spring Boot Backend API]
+    C --> D[Main PostgreSQL]
     C --> E[Docker Engine]
-    E --> F[Contenedores de BD]
+    E --> F[DB Containers]
     C --> G[Mercado Pago]
     C --> H[Email Service]
     
@@ -45,125 +45,125 @@ graph TB
     style F fill:#DC2626,color:#fff
 ```
 
-## Stack Tecnológico
+## Tech Stack
 
 ### Backend
-- **Java 17+** con Spring Boot 3.x
+- **Java 17+** with Spring Boot 3.x
 - **Spring Data JPA** + Hibernate
-- **Spring Security** con JWT
-- **Docker Java SDK** para orquestación
-- **PostgreSQL** como base de datos principal
-- **Mercado Pago SDK** para pagos
+- **Spring Security** with JWT
+- **Docker Java SDK** for orchestration
+- **PostgreSQL** as main database
+- **Mercado Pago SDK** for payments
 
 ### Frontend
-- **React 18** con Vite
-- **React Router v6** para navegación
-- **TailwindCSS** para estilos
-- **Axios** para comunicación HTTP
-- **Zustand** para gestión de estado
+- **React 18** with Vite
+- **React Router v6** for navigation
+- **TailwindCSS** for styling
+- **Axios** for HTTP communication
+- **Zustand** for state management
 
-### Infraestructura
-- **Docker** y Docker Compose
-- **Nginx** como reverse proxy
-- **VPS** con Ubuntu
-- **SSL** con Let's Encrypt
+### Infrastructure
+- **Docker** and Docker Compose
+- **Nginx** as reverse proxy
+- **VPS** with Ubuntu
+- **SSL** with Let's Encrypt
 
-## Planes y Precios
+## Plans and Pricing
 
-| Plan | Instancias | Precio | Características |
-|------|-----------|--------|-----------------|
-| **FREE** | 2 | $0/mes | Nombres de BD auto-generados, Soporte comunitario |
-| **STANDARD** | 5 | $19.99/mes | Nombres personalizados, Soporte por email, Backups diarios |
-| **PREMIUM** | 10 | $49.99/mes | Todo lo de STANDARD + Soporte prioritario, Backups por hora |
+| Plan | Instances | Price | Features |
+|------|-----------|-------|----------|
+| **FREE** | 2 | $0/month | Auto-generated DB names, Community support |
+| **STANDARD** | 5 | $19.99/month | Custom names, Email support, Daily backups |
+| **PREMIUM** | 10 | $49.99/month | All STANDARD + Priority support, Hourly backups |
 
-## Flujo de Trabajo
+## Workflow
 
-### 1. Registro y Autenticación
+### 1. Registration and Authentication
 ```mermaid
 sequenceDiagram
-    Usuario->>Frontend: Registro/Login
+    User->>Frontend: Register/Login
     Frontend->>Backend: POST /api/auth/register
-    Backend->>Database: Crear usuario
+    Backend->>Database: Create user
     Backend->>Frontend: JWT Token
-    Frontend->>Usuario: Acceso al Dashboard
+    Frontend->>User: Dashboard access
 ```
 
-### 2. Crear Instancia
+### 2. Create Instance
 ```mermaid
 sequenceDiagram
-    Usuario->>Frontend: Seleccionar motor
+    User->>Frontend: Select engine
     Frontend->>Backend: POST /api/databases
-    Backend->>Backend: Validar límites
-    Backend->>Docker: Crear contenedor
+    Backend->>Backend: Validate limits
+    Backend->>Docker: Create container
     Docker->>Backend: Container ID
-    Backend->>Frontend: Credenciales
-    Frontend->>Usuario: Mostrar credenciales (una vez)
+    Backend->>Frontend: Credentials
+    Frontend->>User: Show credentials (once)
 ```
 
-### 3. Gestionar Instancia
-- **Suspender:** Detiene el contenedor (libera recursos)
-- **Reanudar:** Inicia el contenedor nuevamente
-- **Rotar Contraseña:** Genera nueva contraseña segura
-- **Eliminar:** Destruye el contenedor permanentemente
+### 3. Manage Instance
+- **Suspend:** Stops the container (frees resources)
+- **Resume:** Starts the container again
+- **Rotate Password:** Generates new secure password
+- **Delete:** Permanently destroys the container
 
-## Comenzar
+## Getting StartedStarted
 
-Explora la documentación por sección:
+Explore the documentation by section:
 
 ### 📚 [Backend](./backend/intro.md)
-- Instalación y configuración
-- Arquitectura del sistema
-- Referencia de API REST
-- Deployment en producción
+- Installation and configuration
+- System architecture
+- REST API reference
+- Production deployment
 
 ### 🎨 [Frontend](./frontend/intro.md)
-- Setup del proyecto
-- Estructura de componentes
-- Integración con API
-- Deployment con Docker
+- Project setup
+- Component structure
+- API integration
+- Docker deployment
 
-## Características Destacadas
+## Featured Characteristics
 
-### 🔐 Seguridad
-- Autenticación JWT con tokens
-- Contraseñas hasheadas con BCrypt
-- Visibilidad única de credenciales
-- Rotación de contraseñas
-- HTTPS obligatorio
+### 🔐 Security
+- JWT token authentication
+- BCrypt hashed passwords
+- Single-view credentials visibility
+- Password rotation
+- Mandatory HTTPS
 
-### 🐳 Orquestación Docker
-- Creación automática de contenedores
-- Gestión de puertos dinámicos
-- Health checks automatizados
-- Cleanup de recursos
+### 🐳 Docker Orchestration
+- Automatic container creation
+- Dynamic port management
+- Automated health checks
+- Resource cleanup
 
-### 💳 Pagos Integrados
-- Integración con Mercado Pago
-- Sandbox para testing
-- Webhooks para confirmación
-- Actualización automática de planes
+### 💳 Integrated Payments
+- Mercado Pago integration
+- Sandbox for testing
+- Webhooks for confirmation
+- Automatic plan updates
 
-### 📧 Notificaciones
-- Emails de bienvenida
-- Confirmación de creación de instancias
-- Alertas de rotación de contraseñas
-- PDFs con credenciales descargables
+### 📧 Notifications
+- Welcome emails
+- Instance creation confirmation
+- Password rotation alerts
+- Downloadable credential PDFs
 
-## Recursos Adicionales
+## Additional Resources
 
 - 🔗 **Backend Repository:** [CrudCloud-Backend-ColdBrew](https://github.com/Team-Cold-Brew/CrudCloud-Backend-ColdBrew)
 - 🔗 **Frontend Repository:** [CrudCloud-Frontend](https://github.com/Team-Cold-Brew/CrudCloud-Frontend)
-- 🌐 **Sitio Web:** [https://cold-brew.crudzaso.com](https://cold-brew.crudzaso.com)
-- 📊 **Azure Boards:** Trazabilidad de desarrollo
+- 🌐 **Website:** [https://cold-brew.crudzaso.com](https://cold-brew.crudzaso.com)
+- 📊 **Azure Boards:** Development traceability
 
-## Soporte
+## Support
 
-¿Necesitas ayuda?
+Need help?
 
-- 📖 Lee la documentación completa
-- 💬 Abre un issue en GitHub
-- 📧 Contacta al equipo: Team Cold Brew
+- 📖 Read the complete documentation
+- 💬 Open an issue on GitHub
+- 📧 Contact the team: Team Cold Brew
 
 ---
 
-**¡Empieza ahora y despliega tu primera base de datos en minutos!** 🚀
+**Start now and deploy your first database in minutes!** 🚀

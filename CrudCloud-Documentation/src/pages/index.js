@@ -20,13 +20,13 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Empezar con CrudCloud 🚀
+            Get Started with CrudCloud 🚀
           </Link>
           <Link
             className="button button--outline button--lg"
             to="https://cold-brew.crudzaso.com"
             style={{marginLeft: '1rem'}}>
-            Ir a la Plataforma →
+            Go to Platform →
           </Link>
         </div>
       </div>
@@ -38,8 +38,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Documentación`}
-      description="Plataforma cloud para gestión de bases de datos - Documentación completa de CrudCloud">
+      title={`Documentation`}
+      description="Cloud platform for database management - Complete CrudCloud documentation">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

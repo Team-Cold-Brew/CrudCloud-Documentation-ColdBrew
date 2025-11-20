@@ -15,7 +15,7 @@
  @type {import('@docusaurus/plugin-content-docs').SidebarsConfig}
  */
 const sidebars = {
-  // Sidebar principal de CrudCloud
+  // Main CrudCloud Sidebar
   tutorialSidebar: [
     'intro',
     {
@@ -29,7 +29,7 @@ const sidebars = {
         'backend/deployment',
         {
           type: 'category',
-          label: 'Módulos',
+          label: 'Modules',
           collapsed: false,
           items: [
             'backend/modules/auth',

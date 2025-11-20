@@ -1,55 +1,55 @@
 # Deployment
 
-## Requisitos del Servidor
+## Server Requirements
 
-### Especificaciones Mínimas
+### Minimum Specifications
 
 - **CPU:** 2 cores
 - **RAM:** 4 GB
-- **Disco:** 50 GB SSD
-- **OS:** Ubuntu 20.04 LTS o superior
+- **Disk:** 50 GB SSD
+- **OS:** Ubuntu 20.04 LTS or higher
 
-### Software Necesario
+### Required Software
 
 - Docker 20.10+
 - Docker Compose 2.0+
 - Nginx 1.18+
-- PostgreSQL 14+ (puede ser contenedor)
-- Certbot (para SSL)
+- PostgreSQL 14+ (can be container)
+- Certbot (for SSL)
 
 ---
 
-## Preparación del Servidor
+## Server Preparation
 
-### 1. Actualizar el Sistema
+### 1. Update the System
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 2. Instalar Docker
+### 2. Install Docker
 
 ```bash
-# Instalar Docker
+# Install Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 
-# Agregar usuario al grupo docker
+# Add user to docker group
 sudo usermod -aG docker $USER
 
-# Habilitar Docker al inicio
+# Enable Docker at startup
 sudo systemctl enable docker
 sudo systemctl start docker
 ```
 
-### 3. Instalar Docker Compose
+### 3. Install Docker Compose
 
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### 4. Instalar Nginx
+### 4. Install Nginx
 
 ```bash
 sudo apt install nginx -y
@@ -59,11 +59,11 @@ sudo systemctl start nginx
 
 ---
 
-## Configuración de DNS
+## DNS Configuration
 
-Configura los siguientes registros DNS:
+Configure the following DNS records:
 
-| Tipo | Nombre | Valor | TTL |
+| Type | Name | Value | TTL |
 |------|--------|-------|-----|
 | A | `api.cold-brew.crudzaso.com` | `IP_DEL_SERVIDOR` | 300 |
 | A | `cold-brew.crudzaso.com` | `IP_DEL_SERVIDOR` | 300 |
@@ -71,9 +71,9 @@ Configura los siguientes registros DNS:
 
 ---
 
-## Deployment con Docker
+## Deployment with Docker
 
-### Estructura de Archivos
+### File Structure
 
 ```
 /opt/crudcloud/
@@ -86,12 +86,12 @@ Configura los siguientes registros DNS:
 │       ├── backend.conf
 │       └── frontend.conf
 └── ssl/
-    └── (certificados SSL)
+    └── (SSL certificates)
 ```
 
 ### Docker Compose
 
-Crea `/opt/crudcloud/docker-compose.yml`:
+Create `/opt/crudcloud/docker-compose.yml`:
 
 ```yaml
 version: '3.8'
@@ -143,9 +143,9 @@ networks:
     driver: bridge
 ```
 
-### Archivo .env
+### .env File
 
-Crea `/opt/crudcloud/.env`:
+Create `/opt/crudcloud/.env`:
 
 ```bash
 # Database
@@ -167,15 +167,15 @@ MAIL_PASSWORD=your-app-password
 SPRING_PROFILES_ACTIVE=prod
 ```
 
-⚠️ **Importante:** Genera contraseñas seguras y nunca las commits al repositorio.
+⚠️ **Important:** Generate secure passwords and never commit them to the repository.
 
 ---
 
-## Configuración de Nginx
+## Nginx Configuration
 
 ### Backend (API)
 
-Crea `/etc/nginx/sites-available/backend`:
+Create `/etc/nginx/sites-available/backend`:
 
 ```nginx
 upstream backend {
@@ -238,7 +238,7 @@ server {
 }
 ```
 
-### Habilitar el sitio
+### Enable the Site
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/backend /etc/nginx/sites-enabled/
@@ -248,15 +248,15 @@ sudo systemctl reload nginx
 
 ---
 
-## Certificados SSL
+## SSL Certificates
 
-### Instalar Certbot
+### Install Certbot
 
 ```bash
 sudo apt install certbot python3-certbot-nginx -y
 ```
 
-### Obtener Certificados
+### Obtain Certificates
 
 ```bash
 # Backend
@@ -269,43 +269,43 @@ sudo certbot --nginx -d cold-brew.crudzaso.com
 sudo certbot --nginx -d docs.cold-brew.crudzaso.com
 ```
 
-### Renovación Automática
+### Automatic Renewal
 
 ```bash
-# Certbot instala un cron automáticamente
-# Verificar:
+# Certbot installs a cron automatically
+# Verify:
 sudo certbot renew --dry-run
 ```
 
 ---
 
-## Despliegue de la Aplicación
+## Application Deployment
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
 cd /opt/crudcloud
 git clone https://github.com/Team-Cold-Brew/CrudCloud-Backend-ColdBrew.git backend
 ```
 
-### 2. Configurar Variables de Entorno
+### 2. Configure Environment Variables
 
-Edita `/opt/crudcloud/.env` con los valores de producción.
+Edit `/opt/crudcloud/.env` with production values.
 
-### 3. Construir y Levantar los Servicios
+### 3. Build and Start Services
 
 ```bash
 cd /opt/crudcloud
 docker-compose up -d --build
 ```
 
-### 4. Verificar el Estado
+### 4. Verify Status
 
 ```bash
-# Ver logs
+# View logs
 docker-compose logs -f backend
 
-# Verificar contenedores
+# Check containers
 docker-compose ps
 
 # Health check
@@ -314,15 +314,15 @@ curl https://api.cold-brew.crudzaso.com/actuator/health
 
 ---
 
-## Inicialización de la Base de Datos
+## Database Initialization
 
-### Crear Planes por Defecto
+### Create Default Plans
 
 ```bash
-# Conectar a la base de datos
+# Connect to the database
 docker exec -it crudcloud-postgres psql -U postgres -d crudcloud
 
-# Insertar planes
+# Insert plans
 INSERT INTO plans (name, max_instances, price, currency) VALUES
 ('FREE', 2, 0, 'USD'),
 ('STANDARD', 5, 19.99, 'USD'),
@@ -331,9 +331,9 @@ INSERT INTO plans (name, max_instances, price, currency) VALUES
 
 ---
 
-## Monitoreo y Logs
+## Monitoring and Logs
 
-### Ver Logs en Tiempo Real
+### View Real-Time Logs
 
 ```bash
 # Backend
@@ -342,11 +342,11 @@ docker-compose logs -f backend
 # PostgreSQL
 docker-compose logs -f postgres
 
-# Todos los servicios
+# All services
 docker-compose logs -f
 ```
 
-### Logs de Nginx
+### Nginx Logs
 
 ```bash
 # Access logs
@@ -356,12 +356,12 @@ sudo tail -f /var/log/nginx/backend-access.log
 sudo tail -f /var/log/nginx/backend-error.log
 ```
 
-### Rotación de Logs
+### Log Rotation
 
-Nginx rota logs automáticamente. Para Docker:
+Nginx rotates logs automatically. For Docker:
 
 ```bash
-# Configurar en docker-compose.yml
+# Configure in docker-compose.yml
 services:
   backend:
     logging:
@@ -373,30 +373,30 @@ services:
 
 ---
 
-## Backup y Recuperación
+## Backup and Recovery
 
-### Backup de Base de Datos
+### Database Backup
 
 ```bash
-# Crear backup
+# Create backup
 docker exec crudcloud-postgres pg_dump -U postgres crudcloud > backup_$(date +%Y%m%d).sql
 
-# Backup automático (crontab)
+# Automatic backup (crontab)
 0 2 * * * docker exec crudcloud-postgres pg_dump -U postgres crudcloud > /backups/crudcloud_$(date +\%Y\%m\%d).sql
 ```
 
-### Restaurar Backup
+### Restore Backup
 
 ```bash
-# Restaurar desde backup
+# Restore from backup
 cat backup_20250115.sql | docker exec -i crudcloud-postgres psql -U postgres -d crudcloud
 ```
 
 ---
 
-## Actualizaciones
+## Updates
 
-### Actualizar el Backend
+### Update the Backend
 
 ```bash
 cd /opt/crudcloud/backend
@@ -409,7 +409,7 @@ docker-compose up -d --build backend
 
 ```bash
 cd /opt/crudcloud/backend
-git checkout <commit-anterior>
+git checkout <previous-commit>
 cd ..
 docker-compose up -d --build backend
 ```
@@ -418,99 +418,99 @@ docker-compose up -d --build backend
 
 ## Troubleshooting
 
-### Backend no inicia
+### Backend won't start
 
 ```bash
-# Ver logs detallados
+# View detailed logs
 docker-compose logs backend
 
-# Verificar conectividad a PostgreSQL
+# Check PostgreSQL connectivity
 docker exec crudcloud-backend nc -zv postgres 5432
 
-# Verificar variables de entorno
+# Check environment variables
 docker exec crudcloud-backend env | grep DB_
 ```
 
-### Error de permisos con Docker
+### Docker permission error
 
 ```bash
-# Verificar que el usuario está en el grupo docker
+# Verify user is in docker group
 groups
 
-# Reiniciar sesión si es necesario
+# Restart session if needed
 sudo usermod -aG docker $USER
 ```
 
-### Contenedores de BD no se crean
+### DB containers won't create
 
 ```bash
-# Verificar que Docker socket está montado
+# Verify Docker socket is mounted
 docker exec crudcloud-backend ls -l /var/run/docker.sock
 
-# Verificar permisos
+# Check permissions
 ls -l /var/run/docker.sock
 ```
 
 ---
 
-## Seguridad
+## Security
 
 ### Firewall
 
 ```bash
-# Permitir solo puertos necesarios
+# Allow only necessary ports
 sudo ufw allow 22/tcp    # SSH
 sudo ufw allow 80/tcp    # HTTP
 sudo ufw allow 443/tcp   # HTTPS
 sudo ufw enable
 ```
 
-### Actualizar Dependencias
+### Update Dependencies
 
 ```bash
 # Backend
 cd /opt/crudcloud/backend
 ./mvnw versions:display-dependency-updates
 
-# Sistema
+# System
 sudo apt update && sudo apt upgrade -y
 ```
 
-### Hardening de Docker
+### Docker Hardening
 
 ```bash
-# No exponer Docker socket sin protección
-# Usar Docker context en lugar de montar socket (avanzado)
+# Don't expose Docker socket without protection
+# Use Docker context instead of mounting socket (advanced)
 ```
 
 ---
 
-## Checklist de Deployment
+## Deployment Checklist
 
 ### Pre-Deployment
-- [ ] Variables de entorno configuradas
-- [ ] DNS configurado y propagado
-- [ ] Certificados SSL obtenidos
-- [ ] Backup de datos existentes
-- [ ] Plan de rollback definido
+- [ ] Environment variables configured
+- [ ] DNS configured and propagated
+- [ ] SSL certificates obtained
+- [ ] Existing data backed up
+- [ ] Rollback plan defined
 
 ### Deployment
-- [ ] Código clonado y actualizado
-- [ ] Docker images construidas
-- [ ] Servicios iniciados correctamente
-- [ ] Nginx configurado y reiniciado
-- [ ] Health checks pasando
+- [ ] Code cloned and updated
+- [ ] Docker images built
+- [ ] Services started correctly
+- [ ] Nginx configured and restarted
+- [ ] Health checks passing
 
 ### Post-Deployment
-- [ ] Smoke tests ejecutados
-- [ ] Crear instancia de prueba
-- [ ] Verificar emails funcionando
-- [ ] Monitoreo configurado
-- [ ] Documentación actualizada
+- [ ] Smoke tests executed
+- [ ] Create test instance
+- [ ] Verify emails working
+- [ ] Monitoring configured
+- [ ] Documentation updated
 
 ---
 
-## Próximos Pasos
+## Next Steps
 
-- [Arquitectura](./architecture.md)
+- [Architecture](./architecture.md)
 - [API Reference](./api-reference.md)

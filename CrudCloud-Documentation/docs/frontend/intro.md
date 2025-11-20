@@ -1,76 +1,76 @@
-# Frontend CrudCloud
+# CrudCloud Frontend
 
-## Descripción General
+## General Description
 
-Dashboard moderno construido con React 18 y TailwindCSS para gestionar bases de datos en la nube de forma intuitiva y eficiente.
+Modern dashboard built with React 18 and TailwindCSS to manage cloud databases intuitively and efficiently.
 
 ## Tech Stack
 
-| Tecnología | Versión | Propósito |
+| Technology | Version | Purpose |
 |------------|---------|-----------|
-| **React** | 18 | Librería UI principal |
-| **React Router** | v6 | Navegación y routing |
-| **Vite** | Latest | Build tool y dev server |
-| **TailwindCSS** | Latest | Framework de estilos |
-| **Axios** | Latest | Cliente HTTP |
-| **Lucide React** | Latest | Sistema de iconos |
-| **Zustand** | Latest | Gestión de estado |
+| **React** | 18 | Main UI library |
+| **React Router** | v6 | Navigation and routing |
+| **Vite** | Latest | Build tool and dev server |
+| **TailwindCSS** | Latest | Styling framework |
+| **Axios** | Latest | HTTP client |
+| **Lucide React** | Latest | Icon system |
+| **Zustand** | Latest | State management |
 
-## Características Principales
+## Main Features
 
-### 🔐 Autenticación
-- Login y registro con JWT
-- Gestión de sesiones persistente
-- Protección de rutas privadas
+### 🔐 Authentication
+- Login and registration with JWT
+- Persistent session management
+- Private route protection
 
 ### 📊 Dashboard
-- Vista general de uso y estadísticas
-- Indicadores de plan actual
-- Métricas en tiempo real
+- Overview of usage and statistics
+- Current plan indicators
+- Real-time metrics
 
-### 🗄️ Gestión de Bases de Datos
-- Catálogo de motores disponibles
-- Creación de instancias con validación
-- Listado y búsqueda de instancias
-- Vista detallada con credenciales
+### 🗄️ Database Management
+- Catalog of available engines
+- Instance creation with validation
+- Instance listing and search
+- Detailed view with credentials
 
-### 🔑 Gestión de Credenciales
-- Copy-to-clipboard para credenciales
-- Rotación de contraseñas
-- Descarga de PDF con información
-- Visibilidad controlada de contraseñas
+### 🔑 Credential Management
+- Copy-to-clipboard for credentials
+- Password rotation
+- PDF download with information
+- Controlled password visibility
 
-### 💳 Planes y Pagos
-- Comparación de planes
-- Upgrade con Mercado Pago
-- Indicadores de uso y límites
+### 💳 Plans and Payments
+- Plan comparison
+- Upgrade with Mercado Pago
+- Usage and limit indicators
 
 ### 🎨 UI/UX
-- 📱 Diseño responsive (mobile-first)
-- 🌙 Dark mode listo
-- ♿ Accesibilidad (ARIA labels)
-- 🎯 Componentes reutilizables
+- 📱 Responsive design (mobile-first)
+- 🌙 Dark mode ready
+- ♿ Accessibility (ARIA labels)
+- 🎯 Reusable components
 
-## Capturas de Pantalla
+## Screenshots
 
 ### Dashboard
-*(Vista principal con estadísticas y accesos rápidos)*
+*(Main view with statistics and quick access)*
 
-### Catálogo de Motores
-*(Grid de motores disponibles: MySQL, PostgreSQL, MongoDB, etc.)*
+### Engine Catalog
+*(Grid of available engines: MySQL, PostgreSQL, MongoDB, etc.)*
 
-### Mis Bases de Datos
-*(Listado de instancias con estados y acciones)*
+### My Databases
+*(Instance listing with states and actions)*
 
-### Detalle de Instancia
-*(Credenciales, conexión y opciones de gestión)*
+### Instance Detail
+*(Credentials, connection and management options)*
 
-## Arquitectura de Componentes
+## Component Architecture
 
 ```
 src/
 ├── components/
-│   ├── common/          # Componentes reutilizables
+│   ├── common/          # Reusable components
 │   │   ├── Button.jsx
 │   │   ├── Input.jsx
 │   │   ├── Modal.jsx
@@ -78,12 +78,12 @@ src/
 │   │   ├── Toast.jsx
 │   │   ├── Badge.jsx
 │   │   └── Select.jsx
-│   └── layout/          # Componentes de layout
+│   └── layout/          # Layout components
 │       ├── Sidebar.jsx
 │       ├── Navbar.jsx
 │       ├── LayoutDashboard.jsx
 │       └── navItems.js
-├── pages/               # Páginas principales
+├── pages/               # Main pages
 │   ├── LoginPage.jsx
 │   ├── Dashboard.jsx
 │   ├── AvailableEngines.jsx
@@ -92,38 +92,38 @@ src/
 │   └── MyPlan.jsx
 ├── context/             # React Context
 │   └── AuthContext.jsx
-├── utils/               # Utilidades
-│   ├── api.js          # Cliente Axios
-│   └── helpers.js      # Funciones auxiliares
-├── types/               # Constantes y tipos
+├── utils/               # Utilities
+│   ├── api.js          # Axios client
+│   └── helpers.js      # Helper functions
+├── types/               # Constants and types
 │   └── constants.js
-├── styles/              # Estilos globales
+├── styles/              # Global styles
 │   └── globals.css
-├── App.jsx              # Componente raíz
+├── App.jsx              # Root component
 └── main.jsx            # Entry point
 ```
 
-## Flujo de Navegación
+## Navigation Flow
 
 ```mermaid
 graph TD
     A[Landing] --> B[Login]
     B --> C[Dashboard]
-    C --> D[Catálogo de Motores]
-    C --> E[Mis Bases de Datos]
-    C --> F[Mi Plan]
-    D --> G[Crear Instancia]
+    C --> D[Engine Catalog]
+    C --> E[My Databases]
+    C --> F[My Plan]
+    D --> G[Create Instance]
     G --> C
-    E --> H[Detalle de Instancia]
-    H --> I[Rotar Contraseña]
-    H --> J[Suspender/Reanudar]
-    H --> K[Eliminar]
+    E --> H[Instance Detail]
+    H --> I[Rotate Password]
+    H --> J[Suspend/Resume]
+    H --> K[Delete]
     F --> L[Upgrade Plan]
     L --> M[Mercado Pago]
     M --> C
 ```
 
-## Paleta de Colores
+## Color Palette
 
 ```css
 :root {
@@ -137,16 +137,16 @@ graph TD
 }
 ```
 
-## Integración con API
+## API Integration
 
-El frontend se conecta al backend mediante Axios configurado con:
+The frontend connects to the backend via Axios configured with:
 
 - **Base URL:** Configurable via `VITE_API_URL`
-- **Interceptores:** Inyección automática de JWT
-- **Error Handling:** Manejo global de errores HTTP
-- **Retry Logic:** Reintentos en fallos de red
+- **Interceptors:** Automatic JWT injection
+- **Error Handling:** Global HTTP error handling
+- **Retry Logic:** Retries on network failures
 
-### Ejemplo de Configuración
+### Configuration Example
 
 ```javascript
 // src/utils/api.js
@@ -159,7 +159,7 @@ const api = axios.create({
   },
 });
 
-// Interceptor para JWT
+// Interceptor for JWT
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -171,31 +171,31 @@ api.interceptors.request.use((config) => {
 export default api;
 ```
 
-## Gestión de Estado
+## State Management
 
 ### AuthContext
 
-Maneja la autenticación global:
-- Usuario actual
-- Token JWT
+Manages global authentication:
+- Current user
+- JWT token
 - Login/Logout
-- Persistencia en localStorage
+- Persistence in localStorage
 
 ### Local State
 
-Cada componente gestiona su estado local con `useState` para:
-- Formularios
+Each component manages its local state with `useState` for:
+- Forms
 - Loading states
-- Errores de validación
+- Validation errors
 
-### Zustand (opcional)
+### Zustand (optional)
 
-Para estado más complejo:
-- Cache de datos
-- Estado compartido entre componentes no relacionados
+For more complex state:
+- Data cache
+- Shared state between unrelated components
 
-## Próximos Pasos
+## Next Steps
 
-- [Instalación y Setup](./setup.md)
-- [Componentes](./components.md)
+- [Installation and Setup](./setup.md)
+- [Components](./components.md)
 - [Deployment](./deployment.md)

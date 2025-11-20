@@ -1,71 +1,71 @@
-# Módulo de Mercado Pago
+# Mercado Pago Module
 
-El módulo de Mercado Pago implementa la integración con la plataforma de pagos utilizando **Checkout Pro** para procesar pagos y gestionar suscripciones.
+The Mercado Pago module implements integration with the payment platform using **Checkout Pro** to process payments and manage subscriptions.
 
-## 📋 Características
+## 📋 Features
 
-✅ Checkout Pro de Mercado Pago  
-✅ Procesamiento de webhooks  
-✅ Gestión automática de suscripciones  
-✅ Historial de pagos por usuario  
-✅ Estados de pago y suscripción  
-✅ Soporte para Sandbox y Producción
+✅ Mercado Pago Checkout Pro  
+✅ Webhook processing  
+✅ Automatic subscription management  
+✅ Payment history per user  
+✅ Payment and subscription states  
+✅ Support for Sandbox and Production
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
 ```
 mercadoPago/
-├── config/               # Configuración del SDK de MercadoPago
-├── controller/           # Endpoints REST
-├── dto/                  # DTOs de Request/Response
-├── model/               # Entidades específicas del módulo
-├── repository/          # Repositorios JPA
-└── service/             # Lógica de negocio
+├── config/               # MercadoPago SDK Configuration
+├── controller/           # REST endpoints
+├── dto/                  # Request/Response DTOs
+├── model/               # Module-specific entities
+├── repository/          # JPA repositories
+└── service/             # Business logic
 ```
 
-### Modelos Compartidos (common/models)
+### Shared Models (common/models)
 
-- `Payment` - Registro de pagos realizados
-- `PaymentStatus` - Estados de un pago
-- `Subscription` - Suscripciones de usuarios
-- `SubscriptionStatus` - Estados de suscripción
+- `Payment` - Record of payments made
+- `PaymentStatus` - States of a payment
+- `Subscription` - User subscriptions
+- `SubscriptionStatus` - Subscription states
 
-### Modelos del Módulo
+### Module Models
 
-- `PaymentPreference` - Preferencias de Checkout Pro creadas
+- `PaymentPreference` - Checkout Pro preferences created
 
-## 🔧 Configuración
+## 🔧 Configuration
 
-### Variables de Entorno
+### Environment Variables
 
 ```properties
-# Access Token de MercadoPago
-mercadopago.access.token=TEST-xxxxx     # Para pruebas
-mercadopago.access.token=APP_USR-xxxxx  # Para producción
+# Access Token from MercadoPago
+mercadopago.access.token=TEST-xxxxx     # For testing
+mercadopago.access.token=APP_USR-xxxxx  # For production
 
-# Public Key (para frontend)
-mercadopago.public.key=TEST-xxxxx       # Para pruebas
-mercadopago.public.key=APP_USR-xxxxx    # Para producción
+# Public Key (for frontend)
+mercadopago.public.key=TEST-xxxxx       # For testing
+mercadopago.public.key=APP_USR-xxxxx    # For production
 
-# URLs de redirección
+# Redirect URLs
 mercadopago.notification.url=https://api.cold-brew.crudzaso.com/api/webhooks/mercadopago
 mercadopago.success.url=https://cold-brew.crudzaso.com/payment/success
 mercadopago.failure.url=https://cold-brew.crudzaso.com/payment/failure
 mercadopago.pending.url=https://cold-brew.crudzaso.com/payment/pending
 ```
 
-### Obtener Credenciales
+### Get Credentials
 
-1. Ingresa a [MercadoPago Developers](https://www.mercadopago.com.ar/developers)
-2. Ve a "Tus integraciones" → "Credenciales"
-3. Copia el **Access Token** y **Public Key**
-4. Para pruebas, usa las credenciales de "Modo Sandbox"
+1. Go to [MercadoPago Developers](https://www.mercadopago.com.ar/developers)
+2. Go to "Your integrations" → "Credentials"
+3. Copy the **Access Token** and **Public Key**
+4. For testing, use the "Sandbox Mode" credentials
 
 ## 🚀 Endpoints
 
-### Pagos
+### Payments
 
-#### Crear Checkout (Preferencia de Pago)
+#### Create Checkout (Payment Preference)
 
 ```http
 POST /api/payments/checkout
@@ -78,7 +78,7 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta exitosa (200 OK):**
+**Successful response (200 OK):**
 
 ```json
 {
@@ -90,13 +90,13 @@ Content-Type: application/json
 }
 ```
 
-**Uso en Frontend:**
+**Frontend Usage:**
 ```javascript
-// Redirigir al usuario al initPoint
+// Redirect user to initPoint
 window.location.href = response.initPoint;
 ```
 
-#### Obtener Pago por ID
+#### Get Payment by ID
 
 ```http
 GET /api/payments/{paymentId}
@@ -122,14 +122,14 @@ Authorization: Bearer {token}
 }
 ```
 
-#### Obtener Pagos de Usuario
+#### Get User Payments
 
 ```http
 GET /api/payments/user/{userId}
-Authorization: Bearer {token}
+Authorization: Bearer <token>
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 [
@@ -147,18 +147,18 @@ Authorization: Bearer {token}
 ]
 ```
 
-#### Obtener Pagos Aprobados de Usuario
+#### Get User Approved Payments
 
 ```http
 GET /api/payments/user/{userId}/approved
-Authorization: Bearer {token}
+Authorization: Bearer <token>
 ```
 
-Filtra solo pagos con estado `APPROVED`.
+Filters only payments with `APPROVED` status.
 
-### Suscripciones
+### Subscriptions
 
-#### Obtener Suscripción de Usuario
+#### Get User Subscription
 
 ```http
 GET /api/subscriptions/user/{userId}
@@ -181,16 +181,16 @@ Authorization: Bearer {token}
 }
 ```
 
-#### Obtener Suscripciones Activas de Usuario
+#### Get User Active Subscriptions
 
 ```http
 GET /api/subscriptions/user/{userId}/active
-Authorization: Bearer {token}
+Authorization: Bearer <token>
 ```
 
-Filtra solo suscripciones con estado `ACTIVE`.
+Filters only subscriptions with `ACTIVE` status.
 
-#### Cancelar Suscripción
+#### Cancel Subscription
 
 ```http
 POST /api/subscriptions/{subscriptionId}/cancel
@@ -209,7 +209,7 @@ Authorization: Bearer {token}
 
 ### Webhooks
 
-#### Webhook de Mercado Pago
+#### Mercado Pago Webhook
 
 ```http
 POST /api/webhooks/mercadopago
@@ -223,14 +223,14 @@ Content-Type: application/json
 }
 ```
 
-**Procesamiento:**
-1. Recibe notificación de Mercado Pago
-2. Obtiene detalles del pago usando el SDK
-3. Actualiza estado del pago en BD
-4. Si pago aprobado:
-   - Crea nueva suscripción
-   - O actualiza suscripción existente
-   - Actualiza plan del usuario
+**Processing:**
+1. Receives notification from Mercado Pago
+2. Obtains payment details using SDK
+3. Updates payment status in DB
+4. If payment approved:
+   - Creates new subscription
+   - Or updates existing subscription
+   - Updates user plan
 
 **Respuesta (200 OK):**
 
@@ -242,138 +242,138 @@ Content-Type: application/json
 }
 ```
 
-## 🔄 Flujo de Pago Completo
+## 🔄 Complete Payment Flow
 
-### Paso 1: Cliente Solicita Checkout
+### Step 1: Client Requests Checkout
 
 ```
 Frontend → POST /api/payments/checkout
 { userId: 1, planId: 2 }
 ```
 
-### Paso 2: Backend Crea Preferencia
+### Step 2: Backend Creates Preference
 
 ```
 Backend:
-1. Busca usuario y plan en BD
-2. Crea PreferenceRequest con SDK de MercadoPago
+1. Searches for user and plan in DB
+2. Creates PreferenceRequest with MercadoPago SDK
    - title: "Plan STANDARD - CrudCloud"
    - quantity: 1
    - unit_price: 19.99
    - external_reference: "PLAN-2-USER-1-abc123"
-3. Configura URLs de retorno
-4. Guarda PaymentPreference en BD
-5. Retorna initPoint al frontend
+3. Configures return URLs
+4. Saves PaymentPreference in DB
+5. Returns initPoint to frontend
 ```
 
-### Paso 3: Usuario Paga en Mercado Pago
+### Step 3: User Pays on Mercado Pago
 
 ```
 Frontend:
-1. Redirige a initPoint
-2. Usuario completa pago en interfaz de MercadoPago
-3. MercadoPago procesa el pago
+1. Redirects to initPoint
+2. User completes payment on MercadoPago interface
+3. MercadoPago processes the payment
 ```
 
-### Paso 4: Notificación vía Webhook
+### Step 4: Notification via Webhook
 
 ```
 MercadoPago → POST /api/webhooks/mercadopago
 { type: "payment", data: { id: "123456789" } }
 
 Backend:
-1. Recibe notificación
-2. Obtiene detalles del pago vía SDK
-3. Guarda/actualiza Payment en BD
-4. Si status = "approved":
-   a. Busca/crea Subscription
-   b. Actualiza User.personalPlan
-   c. Calcula endDate según billingCycle
+1. Receives notification
+2. Obtains payment details via SDK
+3. Saves/updates Payment in DB
+4. If status = "approved":
+   a. Searches/creates Subscription
+   b. Updates User.personalPlan
+   c. Calculates endDate based on billingCycle
 ```
 
-### Paso 5: Redirección
+### Step 5: Redirection
 
 ```
-MercadoPago redirige a:
+MercadoPago redirects to:
 - Success: https://cold-brew.crudzaso.com/payment/success
 - Failure: https://cold-brew.crudzaso.com/payment/failure
 - Pending: https://cold-brew.crudzaso.com/payment/pending
 ```
 
-## 📊 Estados de Pago
+## 📊 Payment States
 
-El módulo mapea los estados de Mercado Pago a estados internos:
+The module maps MercadoPago states to internal states:
 
-| Estado MercadoPago | Estado Interno | Descripción |
+| MercadoPago State | Internal State | Description |
 |-------------------|----------------|-------------|
-| `pending` | `PENDING` | Pago pendiente de procesamiento |
-| `approved` | `APPROVED` | Pago aprobado y acreditado |
-| `authorized` | `APPROVED` | Pago autorizado |
-| `in_process` | `PENDING` | Pago en proceso de revisión |
-| `in_mediation` | `IN_MEDIATION` | Pago en mediación |
-| `rejected` | `REJECTED` | Pago rechazado |
-| `cancelled` | `CANCELLED` | Pago cancelado |
-| `refunded` | `REFUNDED` | Pago reembolsado |
-| `charged_back` | `CHARGED_BACK` | Contracargo aplicado |
+| `pending` | `PENDING` | Pending payment |
+| `approved` | `APPROVED` | Payment approved and credited |
+| `authorized` | `APPROVED` | Payment authorized |
+| `in_process` | `PENDING` | Payment under review |
+| `in_mediation` | `IN_MEDIATION` | Payment in mediation |
+| `rejected` | `REJECTED` | Payment rejected |
+| `cancelled` | `CANCELLED` | Payment cancelled |
+| `refunded` | `REFUNDED` | Payment refunded |
+| `charged_back` | `CHARGED_BACK` | Chargeback applied |
 
-## 📊 Estados de Suscripción
+## 📊 Subscription States
 
-| Estado | Descripción |
+| State | Description |
 |--------|-------------|
-| `ACTIVE` | Suscripción activa y vigente |
-| `CANCELLED` | Suscripción cancelada por el usuario |
-| `EXPIRED` | Suscripción vencida (endDate superado) |
-| `PENDING` | Suscripción pendiente de activación |
+| `ACTIVE` | Active and current subscription |
+| `CANCELLED` | Subscription cancelled by user |
+| `EXPIRED` | Subscription expired (endDate exceeded) |
+| `PENDING` | Subscription pending activation |
 
 ## 🧪 Testing
 
-### Tarjetas de Prueba (Sandbox)
+### Test Cards (Sandbox)
 
-#### Tarjeta Aprobada
+#### Approved Card
 
 ```
-Número: 5031 7557 3453 0604
+Number: 5031 7557 3453 0604
 CVV: 123
-Vencimiento: Cualquier fecha futura
-Nombre: TEST USER
+Expiration: Any future date
+Name: TEST USER
 ```
 
-#### Tarjeta Rechazada
+#### Rejected Card
 
 ```
-Número: 5031 4332 1540 6351
+Number: 5031 4332 1540 6351
 CVV: 123
-Vencimiento: Cualquier fecha futura
+Expiration: Any future date
 ```
 
-Más tarjetas de prueba en: [MercadoPago Test Cards](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/test-cards)
+More test cards at: [MercadoPago Test Cards](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/test-cards)
 
-### Usando ngrok para Webhooks Locales
+### Using ngrok for Local Webhooks
 
 ```bash
-# Iniciar ngrok
+# Start ngrok
 ngrok http 8080
 
-# Copiar URL pública generada
+# Copy generated public URL
 # https://abc123.ngrok.io
 
-# Actualizar application.properties
+# Update application.properties
 mercadopago.notification.url=https://abc123.ngrok.io/api/webhooks/mercadopago
 ```
 
-## 🔐 Seguridad
+## 🔐 Security
 
-- ✅ **Access Token nunca expuesto** en frontend (solo Public Key)
-- ✅ **Credenciales en variables de entorno**
-- ✅ **External Reference único** por transacción
-- ⚠️ **Validación de webhooks recomendada** (verificar firma de MercadoPago)
-- ✅ **HTTPS requerido** para webhooks en producción
+- ✅ **Access Token never exposed** in frontend (only Public Key)
+- ✅ **Credentials in environment variables**
+- ✅ **Unique External Reference** per transaction
+- ⚠️ **Webhook validation recommended** (verify MercadoPago signature)
+- ✅ **HTTPS required** for webhooks in production
 
-## 📝 Notas Importantes
+## 📝 Important Notes
 
 ### External Reference
 
-Formato automático: `PLAN-{planId}-USER-{userId}-{uuid}`
+Automatic format: `PLAN-{planId}-USER-{userId}-{uuid}`
 
 ```java
 String externalReference = String.format(
@@ -386,56 +386,56 @@ String externalReference = String.format(
 
 ### Billing Cycle
 
-Las suscripciones calculan `endDate` basado en el campo `billingCycle` del Plan:
+Subscriptions calculate `endDate` based on Plan's `billingCycle` field:
 
-- `monthly` → endDate = startDate + 1 mes
-- `yearly` → endDate = startDate + 1 año
+- `monthly` → endDate = startDate + 1 month
+- `yearly` → endDate = startDate + 1 year
 
-### Webhooks Públicos
+### Public Webhooks
 
-Los webhooks **deben ser accesibles públicamente**:
-- ✅ Producción: `https://api.cold-brew.crudzaso.com/api/webhooks/mercadopago`
-- ✅ Desarrollo: Usar ngrok para crear túnel público
+Webhooks **must be publicly accessible**:
+- ✅ Production: `https://api.cold-brew.crudzaso.com/api/webhooks/mercadopago`
+- ✅ Development: Use ngrok to create public tunnel
 
-### Gestión Automática de Suscripciones
+### Automatic Subscription Management
 
-Cuando un pago es aprobado:
-1. Si el usuario **no tiene suscripción** → Se crea nueva
-2. Si el usuario **ya tiene suscripción** → Se actualiza con nuevo plan y fechas
-3. El campo `User.personalPlan` se actualiza automáticamente
+When a payment is approved:
+1. If user **has no subscription** → Create new one
+2. If user **already has subscription** → Update with new plan and dates
+3. The `User.personalPlan` field is automatically updated
 
-## 🔗 Integración con Otros Módulos
+## 🔗 Integration with Other Modules
 
-### Con Módulo Auth
-- Obtiene información de `User` para procesar pagos
-- Actualiza `User.personalPlan` al aprobar pago
-- Usa `Plan` para obtener precio y características
+### With Auth Module
+- Obtains `User` information to process payments
+- Updates `User.personalPlan` when approving payment
+- Uses `Plan` to get price and features
 
-### Con Frontend
-- Frontend redirige a `initPoint` para completar pago
-- Recibe notificaciones de éxito/fallo vía URLs de retorno
-- Consulta estado de suscripción para mostrar información al usuario
+### With Frontend
+- Frontend redirects to `initPoint` to complete payment
+- Receives success/failure notifications via return URLs
+- Queries subscription status to show information to user
 
-## 🎯 Funcionalidades Implementadas
+## 🎯 Implemented Features
 
-✅ **Checkout Pro**: Crear preferencias de pago  
-✅ **Procesamiento de Pagos**: Webhooks automáticos  
-✅ **Gestión de Suscripciones**: Creación, actualización y cancelación  
-✅ **Historial de Pagos**: Consulta por usuario  
-✅ **Estados Mapeados**: Conversión de estados de MercadoPago  
-✅ **Cálculo de Fechas**: Automático basado en billing cycle  
-✅ **Soporte Sandbox**: Pruebas con tarjetas de test
+✅ **Checkout Pro**: Create payment preferences  
+✅ **Payment Processing**: Automatic webhooks  
+✅ **Subscription Management**: Creation, update and cancellation  
+✅ **Payment History**: Query by user  
+✅ **Mapped States**: Conversion of MercadoPago states  
+✅ **Date Calculation**: Automatic based on billing cycle  
+✅ **Sandbox Support**: Testing with test cards
 
-## 📚 Referencias
+## 📚 References
 
-- [Documentación Checkout Pro](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/landing)
-- [SDK Java MercadoPago](https://github.com/mercadopago/sdk-java)
-- [Webhooks MercadoPago](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/your-integrations/notifications/webhooks)
-- [Tarjetas de Prueba](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/test-cards)
+- [Checkout Pro Documentation](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/landing)
+- [MercadoPago Java SDK](https://github.com/mercadopago/sdk-java)
+- [MercadoPago Webhooks](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/your-integrations/notifications/webhooks)
+- [Test Cards](https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/additional-content/test-cards)
 
-## Próximos Pasos
+## Next Steps
 
-- [Módulo de Autenticación](./auth.md)
-- [Módulo de Base de Datos](./database.md)
-- [Arquitectura del Backend](../architecture.md)
+- [Authentication Module](./auth.md)
+- [Database Module](./database.md)
+- [Backend Architecture](../architecture.md)
 - [Deployment](../deployment.md)

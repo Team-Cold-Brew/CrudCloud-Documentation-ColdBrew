@@ -1,25 +1,25 @@
-# Instalación y Configuración
+# Installation and Configuration
 
-## Requisitos Previos
+## Prerequisites
 
-- Java 17 o superior
+- Java 17 or higher
 - Maven 3.6+
-- Docker y Docker Compose
+- Docker and Docker Compose
 - PostgreSQL 14+
-- Cuenta de Mercado Pago (para pagos)
+- Mercado Pago account (for payments)
 
-## Instalación Local
+## Local Installation
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Team-Cold-Brew/CrudCloud-Backend-ColdBrew.git
 cd CrudCloud-Backend-ColdBrew
 ```
 
-### 2. Configurar Variables de Entorno
+### 2. Configure Environment Variables
 
-Crea un archivo `application-dev.properties` en `src/main/resources/`:
+Create an `application-dev.properties` file in `src/main/resources/`:
 
 ```properties
 # Database
@@ -52,29 +52,29 @@ mercadopago.webhook-secret=your-webhook-secret
 app.frontend.url=http://localhost:3000
 ```
 
-### 3. Inicializar la Base de Datos
+### 3. Initialize the Database
 
 ```bash
-# Crear la base de datos
+# Create the database
 psql -U postgres -c "CREATE DATABASE crudcloud;"
 
-# Ejecutar migraciones (si usas Flyway)
+# Run migrations (if using Flyway)
 mvn flyway:migrate
 ```
 
-### 4. Compilar y Ejecutar
+### 4. Build and Run
 
 ```bash
-# Compilar el proyecto
+# Build the project
 mvn clean install
 
-# Ejecutar la aplicación
+# Run the application
 mvn spring-boot:run -Dspring.profiles.active=dev
 ```
 
-La API estará disponible en `http://localhost:8080`
+The API will be available at `http://localhost:8080`
 
-## Configuración con Docker
+## Configuration with Docker
 
 ### Docker Compose
 
@@ -111,41 +111,41 @@ volumes:
   postgres_data:
 ```
 
-### Ejecutar con Docker Compose
+### Run with Docker Compose
 
 ```bash
 docker-compose up -d
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 src/main/java/com/riwi/CrudCloud/
-├── auth/                  # Módulo de autenticación
+├── auth/                  # Authentication module
 │   ├── controller/
 │   ├── service/
 │   ├── dto/
 │   └── config/
-├── database/              # Módulo de instancias
+├── database/              # Instance module
 │   ├── controller/
 │   ├── service/
 │   ├── repository/
 │   └── model/
-├── payment/               # Módulo de pagos
+├── payment/               # Payment module
 │   ├── controller/
 │   ├── service/
 │   └── webhook/
-├── plan/                  # Módulo de planes
+├── plan/                  # Plan module
 │   ├── controller/
 │   ├── service/
 │   └── model/
-└── common/                # Componentes compartidos
+└── common/                # Shared components
     ├── exception/
     ├── config/
     └── util/
 ```
 
-## Verificación de la Instalación
+## Installation Verification
 
 ### Health Check
 
@@ -153,7 +153,7 @@ src/main/java/com/riwi/CrudCloud/
 curl http://localhost:8080/actuator/health
 ```
 
-### Crear Usuario de Prueba
+### Create Test User
 
 ```bash
 curl -X POST http://localhost:8080/api/auth/register \
@@ -166,58 +166,58 @@ curl -X POST http://localhost:8080/api/auth/register \
   }'
 ```
 
-## Variables de Entorno en Producción
+## Production Environment Variables
 
-Para producción, configura estas variables de entorno:
+For production, configure these environment variables:
 
-| Variable | Descripción | Ejemplo |
+| Variable | Description | Example |
 |----------|-------------|---------|
-| `DB_URL` | URL de conexión a PostgreSQL | `jdbc:postgresql://db:5432/crudcloud` |
-| `DB_USERNAME` | Usuario de la base de datos | `postgres` |
-| `DB_PASSWORD` | Contraseña de la base de datos | `secure_password` |
-| `JWT_SECRET` | Clave secreta para JWT (min 256 bits) | `your-256-bit-secret` |
-| `MERCADOPAGO_TOKEN` | Token de Mercado Pago | `APP-xxx` |
-| `MAIL_USERNAME` | Email para notificaciones | `noreply@crudcloud.com` |
-| `MAIL_PASSWORD` | Contraseña del email | `app-password` |
-| `FRONTEND_URL` | URL del frontend (CORS) | `https://cold-brew.crudzaso.com` |
+| `DB_URL` | PostgreSQL connection URL | `jdbc:postgresql://db:5432/crudcloud` |
+| `DB_USERNAME` | Database user | `postgres` |
+| `DB_PASSWORD` | Database password | `secure_password` |
+| `JWT_SECRET` | Secret key for JWT (min 256 bits) | `your-256-bit-secret` |
+| `MERCADOPAGO_TOKEN` | Mercado Pago token | `APP-xxx` |
+| `MAIL_USERNAME` | Email for notifications | `noreply@crudcloud.com` |
+| `MAIL_PASSWORD` | Email password | `app-password` |
+| `FRONTEND_URL` | Frontend URL (CORS) | `https://cold-brew.crudzaso.com` |
 
 ## Troubleshooting
 
 ### Error: Cannot connect to Docker daemon
 
-Asegúrate de que Docker esté ejecutándose y que el usuario tenga permisos:
+Make sure Docker is running and the user has permissions:
 
 ```bash
 # Linux/Mac
 sudo usermod -aG docker $USER
-# Reiniciar sesión
+# Restart session
 
-# Verificar
+# Verify
 docker ps
 ```
 
 ### Error: Database connection refused
 
-Verifica que PostgreSQL esté ejecutándose:
+Verify that PostgreSQL is running:
 
 ```bash
-# Verificar estado
+# Check status
 docker ps | grep postgres
 
-# Ver logs
+# View logs
 docker logs crudcloud-postgres
 ```
 
 ### Error: Port already in use
 
-Cambia el puerto en `application.properties`:
+Change the port in `application.properties`:
 
 ```properties
 server.port=8081
 ```
 
-## Próximos Pasos
+## Next Steps
 
-- [Arquitectura del Sistema](./architecture.md)
-- [Referencia de API](./api-reference.md)
-- [Deployment en Producción](./deployment.md)
+- [System Architecture](./architecture.md)
+- [API Reference](./api-reference.md)
+- [Production Deployment](./deployment.md)

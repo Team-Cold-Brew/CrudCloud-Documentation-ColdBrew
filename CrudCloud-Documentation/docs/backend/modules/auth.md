@@ -1,10 +1,10 @@
-# Módulo de Autenticación (Auth)
+# Authentication Module (Auth)
 
-El módulo de autenticación maneja el registro de usuarios, inicio de sesión, autenticación OAuth 2.0 y gestión de planes de suscripción.
+The authentication module handles user registration, login, OAuth 2.0 authentication, and subscription plan management.
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-### Diagrama de Alto Nivel
+### High-Level Diagram
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -55,7 +55,7 @@ El módulo de autenticación maneja el registro de usuarios, inicio de sesión, 
               └────────────────────────────────┘
 ```
 
-### Flujo de Interacción de Componentes
+### Component Interaction Flow
 
 ```
 User Request
@@ -90,84 +90,84 @@ Repository Layer
 Response to Client with JWT Token (if auth) or Data
 ```
 
-## 🔐 Flujos de Autenticación
+## 🔐 Authentication Flows
 
-### Registro Tradicional
+### Traditional Registration
 
 ```
-1. Usuario envía POST /api/v1/auth/register
+1. User sends POST /api/v1/auth/register
    { email, username, password }
 
-2. AuthService valida datos
-   ├─ Verifica email único
-   ├─ Verifica username único
-   └─ Hash password con BCrypt
+2. AuthService validates data
+   ├─ Verifies unique email
+   ├─ Verifies unique username
+   └─ Hash password with BCrypt
 
-3. Crea usuario en BD
-   ├─ Asigna plan FREE por defecto
-   └─ Genera timestamps
+3. Creates user in DB
+   ├─ Assigns FREE plan by default
+   └─ Generates timestamps
 
-4. Genera JWT token
+4. Generates JWT token
    └─ Payload: { userId, email, roles }
 
-5. Retorna AuthResponse
+5. Returns AuthResponse
    { token, user: { id, email, username, planName } }
 ```
 
-### Login Tradicional
+### Traditional Login
 
 ```
-1. Usuario envía POST /api/v1/auth/login
+1. User sends POST /api/v1/auth/login
    { email, password }
 
-2. AuthService busca usuario
-   └─ Por email
+2. AuthService searches for user
+   └─ By email
 
-3. Verifica contraseña
+3. Verifies password
    └─ BCrypt.matches(rawPassword, hashedPassword)
 
-4. Genera JWT token
+4. Generates JWT token
    └─ Payload: { userId, email, roles }
 
-5. Retorna AuthResponse
+5. Returns AuthResponse
    { token, user: { id, email, username, planName } }
 ```
 
 ### OAuth 2.0 (Google/GitHub)
 
 ```
-1. Usuario hace clic en "Login with Google/GitHub"
-   Frontend redirige a: /api/v1/oauth/google o /github
+1. User clicks on "Login with Google/GitHub"
+   Frontend redirects to: /api/v1/oauth/google or /github
 
-2. Backend redirige a proveedor OAuth
-   └─ Con client_id y redirect_uri
+2. Backend redirects to OAuth provider
+   └─ With client_id and redirect_uri
 
-3. Usuario autoriza en proveedor
+3. User authorizes on provider
 
-4. Proveedor redirige a callback
+4. Provider redirects to callback
    GET /api/v1/oauth/google/callback?code=xyz
 
-5. Backend intercambia code por access_token
-   └─ POST a token URL del proveedor
+5. Backend exchanges code for access_token
+   └─ POST to provider's token URL
 
-6. Obtiene información del usuario
-   └─ GET a user info URL del proveedor
+6. Obtains user information
+   └─ GET to provider's user info URL
 
-7. OAuthUserProcessorService procesa usuario
-   ├─ Si existe por email → Vincula provider
-   └─ Si no existe → Crea usuario nuevo
+7. OAuthUserProcessorService processes user
+   ├─ If exists by email → Link provider
+   └─ If doesn't exist → Create new user
 
-8. Genera JWT token
+8. Generates JWT token
 
-9. Redirige a frontend
+9. Redirects to frontend
    https://cold-brew.crudzaso.com?token=xyz
 ```
 
 ## 📡 API Endpoints
 
-### Autenticación
+### Authentication
 
-#### Registro de Usuario
+#### User Registration
 
 ```http
 POST /api/v1/auth/register
@@ -180,7 +180,7 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta exitosa (201 Created):**
+**Successful response (201 Created):**
 
 ```json
 {
@@ -196,12 +196,12 @@ Content-Type: application/json
 }
 ```
 
-**Errores:**
-- `400 Bad Request`: Email ya registrado
-- `400 Bad Request`: Username ya existe
-- `400 Bad Request`: Validación de datos fallida
+**Errors:**
+- `400 Bad Request`: Email already registered
+- `400 Bad Request`: Username already exists
+- `400 Bad Request`: Data validation failed
 
-#### Login de Usuario
+#### User Login
 
 ```http
 POST /api/v1/auth/login
@@ -229,11 +229,11 @@ Content-Type: application/json
 }
 ```
 
-**Errores:**
-- `401 Unauthorized`: Credenciales inválidas
-- `404 Not Found`: Usuario no encontrado
+**Errors:**
+- `401 Unauthorized`: Invalid credentials
+- `404 Not Found`: User not found
 
-#### Obtener Perfil de Usuario
+#### Get User Profile
 
 ```http
 GET /api/v1/auth/profile
@@ -255,15 +255,15 @@ Authorization: Bearer {token}
 
 ### OAuth Endpoints
 
-#### Google OAuth Inicio
+#### Google OAuth Start
 
 ```http
 GET /api/v1/oauth/google
 ```
 
-Redirige a Google OAuth con:
-- `client_id`: ID de aplicación Google
-- `redirect_uri`: URL de callback
+Redirects to Google OAuth with:
+- `client_id`: Google application ID
+- `redirect_uri`: Callback URL
 - `response_type`: code
 - `scope`: openid email profile
 
@@ -273,17 +273,17 @@ Redirige a Google OAuth con:
 GET /api/v1/oauth/google/callback?code=xyz
 ```
 
-Procesa código de autorización y retorna token JWT.
+Processes authorization code and returns JWT token.
 
-#### GitHub OAuth Inicio
+#### GitHub OAuth Start
 
 ```http
 GET /api/v1/oauth/github
 ```
 
-Redirige a GitHub OAuth con:
-- `client_id`: ID de aplicación GitHub
-- `redirect_uri`: URL de callback
+Redirects to GitHub OAuth with:
+- `client_id`: GitHub application ID
+- `redirect_uri`: Callback URL
 - `scope`: read:user user:email
 
 #### GitHub OAuth Callback
@@ -292,17 +292,17 @@ Redirige a GitHub OAuth con:
 GET /api/v1/oauth/github/callback?code=xyz
 ```
 
-Procesa código de autorización y retorna token JWT.
+Processes authorization code and returns JWT token.
 
-### Planes de Suscripción
+### Subscription Plans
 
-#### Obtener Todos los Planes
+#### Get All Plans
 
 ```http
 GET /api/v1/plans
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 [
@@ -333,13 +333,13 @@ GET /api/v1/plans
 ]
 ```
 
-#### Obtener Plan por ID
+#### Get Plan by ID
 
 ```http
 GET /api/v1/plans/{planId}
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -352,18 +352,18 @@ GET /api/v1/plans/{planId}
 }
 ```
 
-**Errores:**
-- `404 Not Found`: Plan no encontrado
+**Errors:**
+- `404 Not Found`: Plan not found
 
-#### Obtener Plan por Nombre
+#### Get Plan by Name
 
 ```http
 GET /api/v1/plans/name/{name}
 ```
 
-Valores válidos: `FREE`, `STANDARD`, `PREMIUM`
+Valid values: `FREE`, `STANDARD`, `PREMIUM`
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 
 ```json
 {
@@ -376,7 +376,7 @@ Valores válidos: `FREE`, `STANDARD`, `PREMIUM`
 }
 ```
 
-## 🔒 Configuración de Seguridad
+## 🔒 Security Configuration
 
 ### JWT Configuration
 
@@ -410,25 +410,25 @@ GITHUB_USER_INFO_URL=https://api.github.com/user
 
 ### Security Filter Chain
 
-- **CORS habilitado** para `https://cold-brew.crudzaso.com`
-- **CSRF deshabilitado** (API REST stateless)
+- **CORS enabled** for `https://cold-brew.crudzaso.com`
+- **CSRF disabled** (stateless REST API)
 - **Session Management**: STATELESS
-- **Endpoints públicos**:
+- **Public endpoints**:
   - `/api/v1/auth/register`
   - `/api/v1/auth/login`
   - `/api/v1/oauth/**`
   - `/api/v1/plans/**`
 
-- **Endpoints protegidos**:
-  - `/api/v1/auth/profile` (requiere JWT)
+- **Protected endpoints**:
+  - `/api/v1/auth/profile` (requires JWT)
 
 ### Password Hashing
 
-- **Algoritmo**: BCrypt
+- **Algorithm**: BCrypt
 - **Strength**: 12 rounds
-- **Salt**: Generado automáticamente
+- **Salt**: Automatically generated
 
-## 📊 Modelos de Datos
+## 📊 Data Models
 
 ### User Entity
 
@@ -515,32 +515,32 @@ public class UserOAuthProvider {
 }
 ```
 
-## 🔗 Puntos de Integración
+## 🔗 Integration Points
 
-### Con Módulo de Base de Datos
-- Usa `Plan` para aplicar límites de creación de bases de datos
-- Relación: `User.personalPlan` → restricciones `maxDatabases`
+### With Database Module
+- Uses `Plan` to apply database creation limits
+- Relationship: `User.personalPlan` → `maxDatabases` restrictions
 
-### Con Módulo de Pagos
-- Upgrade de planes mediante procesamiento de pagos
-- Gestión de suscripciones
-- Actualización automática de `User.personalPlan`
+### With Payment Module
+- Plan upgrades via payment processing
+- Subscription management
+- Automatic update of `User.personalPlan`
 
-### Con Frontend
-- Provee JWT token para llamadas API subsecuentes
-- Formato estandarizado de respuestas con DTOs
-- Soporte para integración OAuth
+### With Frontend
+- Provides JWT token for subsequent API calls
+- Standardized response format with DTOs
+- Support for OAuth integration
 
-## ⚠️ Manejo de Excepciones
+## ⚠️ Exception Handling
 
-### Excepciones Personalizadas
+### Custom Exceptions
 
-- **`DuplicateResourceException`**: Email o username ya existe
-- **`InvalidCredentialsException`**: Contraseña incorrecta
-- **`ResourceNotFoundException`**: Usuario o plan no encontrado
-- **`OAuthProcessingException`**: Error en flujo OAuth
+- **`DuplicateResourceException`**: Email or username already exists
+- **`InvalidCredentialsException`**: Incorrect password
+- **`ResourceNotFoundException`**: User or plan not found
+- **`OAuthProcessingException`**: Error in OAuth flow
 
-### Respuestas de Error
+### Error Responses
 
 ```json
 {
@@ -551,29 +551,29 @@ public class UserOAuthProvider {
 }
 ```
 
-## 📝 Niveles de Plan
+## 📝 Plan Levels
 
-| Plan | Max Bases de Datos | Precio Mensual | Características |
+| Plan | Max Databases | Monthly Price | Features |
 |------|-------------------|----------------|-----------------|
 | FREE | 2 | $0 | Nombres de BD auto-generados |
 | STANDARD | 5 | $19.99 | Nombres personalizados, soporte por email |
 | PREMIUM | 10 | $49.99 | Todo STANDARD + soporte prioritario |
 
-## 🔑 Características Clave
+## 🔑 Key Features
 
-✅ **Autenticación Tradicional** con email/password  
-✅ **OAuth 2.0** con Google y GitHub  
-✅ **JWT Tokens** para sesiones stateless  
-✅ **Hashing de Contraseñas** con BCrypt (12 rounds)  
-✅ **Gestión de Planes** de suscripción  
-✅ **Validación de Datos** con Spring Validation  
-✅ **Manejo de Excepciones** centralizado  
-✅ **CORS configurado** para frontend  
-✅ **Endpoints RESTful** con documentación clara
+✅ **Traditional Authentication** with email/password
+✅ **OAuth 2.0** with Google and GitHub  
+✅ **JWT Tokens** for stateless sessions  
+✅ **Password Hashing** with BCrypt (12 rounds)  
+✅ **Subscription Plan Management**  
+✅ **Data Validation** with Spring Validation  
+✅ **Centralized Exception Handling**  
+✅ **CORS configured** for frontend  
+✅ **RESTful Endpoints** with clear documentation
 
-## Próximos Pasos
+## Next Steps
 
-- [Referencia de API](../api-reference.md)
-- [Módulo de Base de Datos](./database.md)
-- [Módulo de Pagos (Mercado Pago)](./mercado-pago.md)
-- [Arquitectura General](../architecture.md)
+- [API Reference](../api-reference.md)
+- [Database Module](./database.md)
+- [Payment Module (Mercado Pago)](./mercado-pago.md)
+- [General Architecture](../architecture.md)

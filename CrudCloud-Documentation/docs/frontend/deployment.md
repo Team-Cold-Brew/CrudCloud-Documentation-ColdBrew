@@ -1,24 +1,24 @@
 # Deployment
 
-## Preparación para Producción
+## Production Preparation
 
-### Build Optimizado
+### Optimized Build
 
 ```bash
-# Build de producción
+# Production build
 npm run build
 
-# Verificar salida
+# Verify output
 ls -lh dist/
 ```
 
-### Análisis del Bundle
+### Bundle Analysis
 
 ```bash
-# Instalar herramienta de análisis
+# Install analysis tool
 npm install -D rollup-plugin-visualizer
 
-# Agregar a vite.config.js
+# Add to vite.config.js
 import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
@@ -32,17 +32,17 @@ export default defineConfig({
   ],
 })
 
-# Generar reporte
+# Generate report
 npm run build
 ```
 
 ---
 
-## Deployment con Docker
+## Deployment with Docker
 
 ### Dockerfile
 
-Crea `Dockerfile` en la raíz del proyecto:
+Create `Dockerfile` in project root:
 
 ```dockerfile
 # Build stage
@@ -75,9 +75,9 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-### Configuración de Nginx
+### Nginx Configuration
 
-Crea `nginx.conf`:
+Create `nginx.conf`:
 
 ```nginx
 server {
@@ -110,44 +110,44 @@ server {
 }
 ```
 
-### Construir y Ejecutar
+### Build and Run
 
 ```bash
-# Construir imagen
+# Build image
 docker build -t crudcloud-frontend .
 
-# Ejecutar contenedor
+# Run container
 docker run -d \
   -p 80:80 \
   --name crudcloud-frontend \
   crudcloud-frontend
 
-# Verificar
+# Verify
 curl http://localhost
 ```
 
 ---
 
-## Deployment en VPS
+## VPS Deployment
 
-### 1. Preparar el Servidor
+### 1. Prepare Server
 
 ```bash
-# Conectar al servidor
+# Connect to server
 ssh user@api.cold-brew.crudzaso.com
 
-# Actualizar sistema
+# Update system
 sudo apt update && sudo apt upgrade -y
 
-# Instalar Docker
+# Install Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 
-# Instalar Nginx
+# Install Nginx
 sudo apt install nginx -y
 ```
 
-### 2. Clonar el Repositorio
+### 2. Clone Repository
 
 ```bash
 cd /opt
@@ -155,10 +155,10 @@ sudo git clone https://github.com/Team-Cold-Brew/CrudCloud-Frontend.git
 cd CrudCloud-Frontend
 ```
 
-### 3. Configurar Variables de Entorno
+### 3. Configure Environment Variables
 
 ```bash
-# Crear archivo .env.production
+# Create .env.production file
 sudo nano .env.production
 ```
 
@@ -167,13 +167,13 @@ VITE_API_URL=https://api.cold-brew.crudzaso.com/api
 VITE_ENV=production
 ```
 
-### 4. Construir y Desplegar
+### 4. Build and Deploy
 
 ```bash
-# Build con Docker
+# Build with Docker
 sudo docker build -t crudcloud-frontend .
 
-# Ejecutar contenedor
+# Run container
 sudo docker run -d \
   -p 3000:80 \
   --name crudcloud-frontend \
@@ -183,11 +183,11 @@ sudo docker run -d \
 
 ---
 
-## Configuración de Nginx (Reverse Proxy)
+## Nginx Configuration (Reverse Proxy)
 
 ### Frontend
 
-Crea `/etc/nginx/sites-available/frontend`:
+Create `/etc/nginx/sites-available/frontend`:
 
 ```nginx
 upstream frontend {
@@ -238,7 +238,7 @@ server {
 }
 ```
 
-### Habilitar el Sitio
+### Enable the Site
 
 ```bash
 sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/
@@ -251,13 +251,13 @@ sudo systemctl reload nginx
 ## Certificados SSL
 
 ```bash
-# Instalar Certbot
+# Install Certbot
 sudo apt install certbot python3-certbot-nginx -y
 
-# Obtener certificado
+# Obtain certificate
 sudo certbot --nginx -d cold-brew.crudzaso.com
 
-# Renovación automática
+# Automatic renewal
 sudo certbot renew --dry-run
 ```
 
@@ -289,7 +289,7 @@ networks:
     external: true
 ```
 
-### Ejecutar
+### Execute
 
 ```bash
 docker-compose up -d --build
@@ -297,7 +297,7 @@ docker-compose up -d --build
 
 ---
 
-## Optimizaciones de Producción
+## Production Optimizations
 
 ### 1. Code Splitting
 
@@ -333,7 +333,7 @@ function App() {
 ### 3. Service Worker (PWA)
 
 ```bash
-# Instalar plugin PWA
+# Install PWA plugin
 npm install -D vite-plugin-pwa
 ```
 
@@ -371,7 +371,7 @@ export default defineConfig({
 
 ---
 
-## Monitoreo y Analytics
+## Monitoring and Analytics
 
 ### Google Analytics
 
@@ -480,10 +480,10 @@ jobs:
 ### Manual
 
 ```bash
-# Ver historial de imágenes
+# View image history
 docker images
 
-# Revertir a versión anterior
+# Revert to previous version
 docker stop crudcloud-frontend
 docker rm crudcloud-frontend
 docker run -d -p 3000:80 --name crudcloud-frontend crudcloud-frontend:previous
@@ -507,18 +507,18 @@ docker-compose up -d --build
 - [ ] DNS configurado
 
 ### Deployment
-- [ ] Build de producción creado
-- [ ] Imagen Docker construida
-- [ ] Contenedor ejecutándose
+- [ ] Production build created
+- [ ] Docker images built
+- [ ] Container running
 - [ ] Nginx configurado
 - [ ] SSL funcionando
 
 ### Post-Deployment
-- [ ] Sitio accesible via HTTPS
-- [ ] API conectada correctamente
-- [ ] Autenticación funcionando
-- [ ] Todas las páginas cargando
-- [ ] Responsive en móvil
+- [ ] Site accessible via HTTPS
+- [ ] API connected correctly
+- [ ] Authentication working
+- [ ] All pages loading
+- [ ] Responsive on mobile
 
 ---
 
@@ -533,9 +533,9 @@ npm install
 npm run build
 ```
 
-### Error 404 en rutas
+### Error 404 on routes
 
-Asegúrate que Nginx redirige a `index.html`:
+Make sure Nginx redirects to `index.html`:
 
 ```nginx
 location / {
@@ -549,7 +549,7 @@ Verifica CORS en el backend y la URL en `.env.production`.
 
 ---
 
-## Próximos Pasos
+## Next Steps
 
 - [Componentes](./components.md)
 - [Backend Deployment](../backend/deployment.md)

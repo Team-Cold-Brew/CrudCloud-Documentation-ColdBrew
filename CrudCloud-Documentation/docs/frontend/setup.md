@@ -1,100 +1,100 @@
-# Instalación y Setup
+# Installation and Setup
 
-## Requisitos Previos
+## Prerequisites
 
-- Node.js 18+ (LTS recomendado)
-- npm 9+ o yarn 1.22+
+- Node.js 18+ (LTS recommended)
+- npm 9+ or yarn 1.22+
 - Git
 
-## Instalación Local
+## Local Installation
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Team-Cold-Brew/CrudCloud-Frontend.git
 cd CrudCloud-Frontend
 ```
 
-### 2. Instalar Dependencias
+### 2. Install Dependencies
 
 ```bash
-# Con npm
+# With npm
 npm install
 
-# Con yarn
+# With yarn
 yarn install
 ```
 
-### 3. Configurar Variables de Entorno
+### 3. Configure Environment Variables
 
-Crea un archivo `.env.local` en la raíz del proyecto:
+Create a `.env.local` file in the project root:
 
 ```env
 # API Backend
 VITE_API_URL=http://localhost:8080/api
 
-# Mercado Pago (opcional para desarrollo)
+# Mercado Pago (optional for development)
 VITE_MERCADOPAGO_PUBLIC_KEY=TEST-your-public-key
 
 # Environment
 VITE_ENV=development
 ```
 
-### 4. Iniciar el Servidor de Desarrollo
+### 4. Start Development Server
 
 ```bash
-# Con npm
+# With npm
 npm run dev
 
-# Con yarn
+# With yarn
 yarn dev
 ```
 
-La aplicación estará disponible en `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-## Scripts Disponibles
+## Available Scripts
 
 ```json
 {
   "scripts": {
-    "dev": "vite",                    // Servidor de desarrollo
-    "build": "vite build",            // Build de producción
-    "preview": "vite preview",        // Preview del build
+    "dev": "vite",                    // Development server
+    "build": "vite build",            // Production build
+    "preview": "vite preview",        // Preview build
     "lint": "eslint . --ext js,jsx",  // Linter
-    "format": "prettier --write ."    // Formatear código
+    "format": "prettier --write ."    // Format code
   }
 }
 ```
 
-## Estructura de Archivos
+## File Structure
 
 ```
 CrudCloud-Frontend/
-├── public/              # Assets estáticos
+├── public/              # Static assets
 │   ├── favicon.ico
 │   └── logo.png
 ├── src/
-│   ├── components/      # Componentes React
-│   │   ├── common/      # Componentes reutilizables
-│   │   └── layout/      # Layouts y navegación
-│   ├── pages/           # Páginas de la aplicación
+│   ├── components/      # React components
+│   │   ├── common/      # Reusable components
+│   │   └── layout/      # Layouts and navigation
+│   ├── pages/           # Application pages
 │   ├── context/         # React Context
-│   ├── utils/           # Utilidades y helpers
-│   ├── styles/          # Estilos globales
-│   ├── App.jsx          # Componente raíz
+│   ├── utils/           # Utilities and helpers
+│   ├── styles/          # Global styles
+│   ├── App.jsx          # Root component
 │   ├── main.jsx         # Entry point
-│   └── index.css        # CSS principal
-├── .env.local           # Variables de entorno
-├── .eslintrc.js         # Configuración ESLint
-├── .prettierrc          # Configuración Prettier
-├── index.html           # HTML base
-├── package.json         # Dependencias
-├── tailwind.config.js   # Config TailwindCSS
-├── vite.config.js       # Config Vite
-└── README.md            # Documentación
+│   └── index.css        # Main CSS
+├── .env.local           # Environment variables
+├── .eslintrc.js         # ESLint configuration
+├── .prettierrc          # Prettier configuration
+├── index.html           # Base HTML
+├── package.json         # Dependencies
+├── tailwind.config.js   # TailwindCSS config
+├── vite.config.js       # Vite config
+└── README.md            # Documentation
 ```
 
-## Configuración de Vite
+## Vite Configuration
 
 ```javascript
 // vite.config.js
@@ -124,7 +124,7 @@ export default defineConfig({
 })
 ```
 
-## Configuración de TailwindCSS
+## TailwindCSS Configuration
 
 ```javascript
 // tailwind.config.js
@@ -148,7 +148,7 @@ export default {
 }
 ```
 
-## Configuración de ESLint
+## ESLint Configuration
 
 ```javascript
 // .eslintrc.js
@@ -182,7 +182,7 @@ module.exports = {
 }
 ```
 
-## Configuración de Prettier
+## Prettier Configuration
 
 ```json
 // .prettierrc
@@ -196,7 +196,7 @@ module.exports = {
 }
 ```
 
-## Dependencias Principales
+## Main Dependencies
 
 ```json
 {
@@ -220,60 +220,60 @@ module.exports = {
 }
 ```
 
-## Variables de Entorno
+## Environment Variables
 
-### Desarrollo (`.env.local`)
+### Development (`.env.local`)
 
 ```env
 VITE_API_URL=http://localhost:8080/api
 VITE_ENV=development
 ```
 
-### Producción (`.env.production`)
+### Production (`.env.production`)
 
 ```env
 VITE_API_URL=https://api.cold-brew.crudzaso.com/api
 VITE_ENV=production
 ```
 
-### Uso en el Código
+### Usage in Code
 
 ```javascript
 const API_URL = import.meta.env.VITE_API_URL
 const IS_DEV = import.meta.env.VITE_ENV === 'development'
 ```
 
-## Build para Producción
+## Production Build
 
-### 1. Crear Build
+### 1. Create Build
 
 ```bash
 npm run build
 ```
 
-Esto genera la carpeta `dist/` con los archivos optimizados.
+This generates the `dist/` folder with optimized files.
 
-### 2. Preview del Build
+### 2. Preview Build
 
 ```bash
 npm run preview
 ```
 
-### 3. Verificar el Build
+### 3. Verify Build
 
 ```bash
-# Verificar tamaño de archivos
+# Check file sizes
 du -sh dist/*
 
-# Verificar estructura
+# Check structure
 tree dist/
 ```
 
-## Optimización del Build
+## Build Optimization
 
 ### Code Splitting
 
-Vite automáticamente hace code splitting. Para lazy loading manual:
+Vite automatically does code splitting. For manual lazy loading:
 
 ```javascript
 // App.jsx
@@ -290,10 +290,10 @@ function App() {
 }
 ```
 
-### Optimización de Imágenes
+### Image Optimization
 
 ```bash
-# Instalar plugin de optimización
+# Install optimization plugin
 npm install vite-plugin-imagemin -D
 ```
 
@@ -315,18 +315,18 @@ export default defineConfig({
 
 ## Troubleshooting
 
-### Puerto en uso
+### Port in use
 
 ```bash
-# Cambiar puerto en vite.config.js
+# Change port in vite.config.js
 server: {
   port: 3000
 }
 ```
 
-### Error de importación de TailwindCSS
+### TailwindCSS import error
 
-Asegúrate de tener `postcss.config.js`:
+Make sure you have `postcss.config.js`:
 
 ```javascript
 export default {
@@ -337,28 +337,28 @@ export default {
 }
 ```
 
-### Problema con variables de entorno
+### Environment variables problem
 
-Las variables deben empezar con `VITE_` para ser accesibles:
+Variables must start with `VITE_` to be accessible:
 
 ```env
-# ❌ Incorrecto
+# ❌ Incorrect
 API_URL=http://localhost:8080
 
-# ✅ Correcto
+# ✅ Correct
 VITE_API_URL=http://localhost:8080
 ```
 
-### Build falla por warnings de ESLint
+### Build fails due to ESLint warnings
 
 ```bash
-# Build ignorando warnings
+# Build ignoring warnings
 npm run build -- --no-lint
 ```
 
 ## Hot Module Replacement (HMR)
 
-Vite incluye HMR por defecto. Para preservar estado:
+Vite includes HMR by default. To preserve state:
 
 ```javascript
 // src/pages/Dashboard.jsx
@@ -367,10 +367,10 @@ if (import.meta.hot) {
 }
 ```
 
-## Testing (Preparado)
+## Testing (Prepared)
 
 ```bash
-# Instalar Vitest y React Testing Library
+# Install Vitest and React Testing Library
 npm install -D vitest @testing-library/react @testing-library/jest-dom
 ```
 
@@ -385,7 +385,7 @@ export default defineConfig({
 })
 ```
 
-## Próximos Pasos
+## Next Steps
 
-- [Componentes](./components.md)
+- [Components](./components.md)
 - [Deployment](./deployment.md)
